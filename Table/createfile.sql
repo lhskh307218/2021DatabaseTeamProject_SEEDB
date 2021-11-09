@@ -18,7 +18,8 @@ CREATE TABLE ORGANIZATION
     Org_Purpose         VARCHAR(4)      CHECK(Org_Purpose IN ('L', 'S', 'A')), -- lend : L, sell : S, All : A
     Region              VARCHAR2(20)     NOT NULL,
     Affiliate_Date      DATE DEFAULT sysdate,
-    Affiliate_Period    NUMBER(5)        NOT NULL
+    Affiliate_Period    NUMBER(5)        NOT NULL,
+    PW                  VARCHAR2(20)    NOT NULL
 );
 
 
