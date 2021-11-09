@@ -98,3 +98,5 @@ INSERT INTO "USER" VALUES ('abc97', 'Lui Che Woo', 'a159357', 'daegu', 53, 010-0
 INSERT INTO "USER" VALUES ('abc98', 'Roman Abramovich', 'a159357', 'daegu', 55, 010-0000-0000, 'M', 'abc123@google.com');
 INSERT INTO "USER" VALUES ('abc99', 'Thomas Frist', 'a159357', 'daegu', 34, 010-0000-0000, 'F', 'abc123@google.com');
 INSERT INTO "USER" VALUES ('abc100', 'Gennady Timchenko', 'a159357', 'daegu', 33, 010-0000-0000, 'F', 'abc123@google.com');
+
+COMMIT;
