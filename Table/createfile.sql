@@ -19,7 +19,7 @@ CREATE TABLE ORGANIZATION
     Region              VARCHAR2(20)     NOT NULL,
     Affiliate_Date      DATE DEFAULT sysdate,
     Affiliate_Period    NUMBER(5)        NOT NULL,
-    PW                  VARCHAR2(20)    NOT NULL
+    Org_PW              VARCHAR2(20)    NOT NULL
 );
 
 
