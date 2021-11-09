@@ -89,7 +89,7 @@ INSERT INTO "SEED" VALUES ('생판-2004-1445', '근대', '건강적경', '식용
 INSERT INTO "SEED" VALUES ('생판-2019-1515', '금감', '영파', '식용', '과수류');
 INSERT INTO "SEED" VALUES ('생판-2020-1297', '금관화', '오스카', '관상용', '화훼류');
 INSERT INTO "SEED" VALUES ('생판-2003-237', '금련화', '레디버드', '관상용', '화훼류');
-INSERT INTO "SEED" VALUES ('생판-1999-1507', '금련화', '호화리버드로즈', '관상용', '화훼류');
+INSERT INTO "SEED" VALUES ('생판-1999-1509', '금련화', '피치멜바', '관상용', '화훼류');
 INSERT INTO "SEED" VALUES ('생판-1999-1507', '금련화', '호화리버드탄제린', '관상용', '화훼류');
 INSERT INTO "SEED" VALUES ('생판-2004-773', '금불초', '골든카펫', '관상용', '화훼류');
 INSERT INTO "SEED" VALUES ('출원-2015-468', '금잔화', '20123107디', '관상용', '화훼류');
