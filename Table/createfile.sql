@@ -16,7 +16,7 @@ CREATE TABLE ORGANIZATION
 (
     OrgName             VARCHAR2(40)    PRIMARY KEY,
     Org_Purpose         VARCHAR(4)      CHECK(Org_Purpose IN ('L', 'S', 'A')), -- lend : L, sell : S, All : A
-    Local               VARCHAR2(20)     NOT NULL,
+    Region              VARCHAR2(20)     NOT NULL,
     Affiliate_Date      DATE DEFAULT sysdate,
     Affiliate_Period    NUMBER(5)        NOT NULL
 );
@@ -26,9 +26,9 @@ CREATE TABLE ORGANIZATION
 --HAS TABLE
 CREATE TABLE HAS
 (
-   VarietyID            VARCHAR2(30
+   VarietyID            VARCHAR2(30)    NOT NULL,
    OrgName              VARCHAR2(40),
-   PRIMARY KEY (VarietyName, OrgName),
+   PRIMARY KEY (VarietyID, OrgName),
    FOREIGN KEY(VarietyID) REFERENCES SEED(VarietyID),
    FOREIGN KEY(OrgName) REFERENCES ORGANIZATION(OrgName)
 );
