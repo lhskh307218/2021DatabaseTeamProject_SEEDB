@@ -54,10 +54,10 @@ CREATE TABLE "USER"
 CREATE TABLE "ORDER"
 (
     OrderNum            NUMBER(10)      NOT NULL,
-    OD_UserID           VARCHAR2(40)    NOT NULL,
+    OD_UserID           VARCHAR2(20)    NOT NULL,
     Purchase_Date       DATE DEFAULT sysdate,
     Order_Purpose       VARCHAR(4) CHECK(Order_Purpose IN ('R', 'B')), -- rent : R, buy : B
-    OD_OrgName          VARCHAR2(20)    NOT NULL,
+    OD_OrgName          VARCHAR2(40)    NOT NULL,
     OD_VarietyID        VARCHAR2(30)    NOT NULL,
     Quantity            NUMBER(5)       NOT NULL,
     FOREIGN KEY(OD_UserID) REFERENCES "USER"(UserID),
