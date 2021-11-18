@@ -1070,7 +1070,7 @@ public class Team7_SEEDB_JDBCC {
         Content = scan.nextLine();
 
         try {
-          // VarietyID 구하기
+          // VarietyID 구하기 
             String sql = "insert into NOTICE_BOARD"
                     +"(NWNum,NWTitle,NWTime,NWContent)"
                     +"values"
