@@ -1,0 +1,1262 @@
+package phase03;
+
+import java.sql.*; // import JDBC package
+import java.util.Scanner;
+import java.io.IOException;
+
+public class Team7_SEEDB_JDBCC {
+/*
+   public static final String URL = "jdbc:oracle:thin:@192.168.56.1:1521:orcl";
+   public static final String USER_SEED ="seed";
+   public static final String USER_PASSWD ="seed";
+   */
+   public static final String URL = "jdbc:oracle:thin:@localhost:1521:orcl";
+   public static final String USER_SEED ="teamproject";
+   public static final String USER_PASSWD ="comp322";
+   
+   static Scanner keyboard = new Scanner(System.in);
+   static int now_user = 1;   /*현재 접속자 분류: 1) 고객 2) 기관 3) 관리자 . 기본값은 고객*/
+   
+   public static void main(String[] args) {
+      /***************************************************
+                            연결
+       ***************************************************/
+      Connection conn = null; // Connection object
+      Statement stmt = null;   // Statement object
+      
+       try {
+           // Load a JDBC driver for Oracle DBMS
+           Class.forName("oracle.jdbc.driver.OracleDriver");
+           //Get a Connection object
+           System.out.println("Success!");
+        }catch(ClassNotFoundException e) {
+            System.err.println("error = " + e.getMessage());
+            System.exit(1);
+        }
+          
+        // Make a connection
+        try {
+             conn = DriverManager.getConnection(URL, USER_SEED, USER_PASSWD);
+            System.out.println("Connected.");
+        }catch(SQLException ex) {
+            ex.printStackTrace();
+            System.err.println("Cannot get a connection: " + ex.getLocalizedMessage());
+            System.err.println("Cannot get a connection: " + ex.getMessage());
+            System.exit(1);
+        }
+        
+        try {
+         conn.setAutoCommit(false);
+         stmt = conn.createStatement();
+      }catch(SQLException ex2) {
+         System.err.println("sql error = " + ex2.getMessage());
+         System.exit(1);
+      }
+        
+      /***************************************************
+                    SEEDB 프로그램
+       ***************************************************/
+        
+      while(true)
+      {
+         System.out.println("SEEDB에 오신 것을 환영합니다!\n\n");
+         
+         /*로그인, 회원가입 메뉴 출력*/
+         System.out.println("-----------------------------------");
+         System.out.println("---------------메뉴-----------------");
+         System.out.println("[1] 로그인       [2] 회원가입         [3] 프로그램 종료");
+         System.out.println("-----------------------------------");
+         System.out.println("-----------------------------------");
+         
+         /*메뉴 입력받기*/
+         int menu_num, Login_Result;
+         System.out.printf("<메뉴를 선택해주세요>: ");
+         menu_num = keyboard.nextInt();
+         
+         if(menu_num == 1)
+         {
+            Login_Result = Login(conn, stmt);
+            
+            /*로그인에 성공*/
+            if(Login_Result == 1)
+            {
+               int select_menu;
+               switch(now_user)
+               {
+               /*1) 접속: 고객*/
+               case 1:
+                  while(true)
+                  {
+                     /*고객 메인 화면*/
+                     System.out.println("-----------------------------------");
+                     System.out.println("---------------메뉴-----------------");
+                     System.out.println("[1] 씨앗 구매    [2] 주문 목록  [3] 공지사항");
+                     System.out.println("[4] 커뮤니티   [5] 마이페이지  [6] 로그아웃");
+                     System.out.println("-----------------------------------");
+                     System.out.println("-----------------------------------");
+                     System.out.println("메뉴를 선택하세요: ");
+      
+                     select_menu = keyboard.nextInt();
+                     
+                     /*로그아웃*/
+                     if(select_menu == 6)
+                        break;
+                     
+                     /*고객 메뉴 실행*/
+                     switch(select_menu)
+                     {
+                     /*고객: [1] 씨앗 구매*/
+                     case 1: {
+                       orderoption(conn, stmt);
+                        break;
+                     }
+                        
+                     /*고객: [2] 주문 목록*/
+                     case 2: {
+                       myOrderList(conn, stmt);
+                        break;
+                     }
+                        
+                     /*고객: [3] 공지사항*/
+                     case 3:
+                        break;
+                        
+                     /*고객: [4] 커뮤니티*/
+                     case 4:
+                        break;
+                        
+                     /*고객: [5] 마이페이지*/
+                     case 5:
+                        break;
+                     }
+                     
+                     
+                  }//고객 메뉴 while문 종료
+                  System.out.println("[고객님의 접속을 종료합니다.]");
+                  break;
+                  
+               /*2) 접속: 기관*/
+               case 2:
+                  while(true)
+                  {
+                     /*판메 기관 메인 화면*/
+                     System.out.println("-----------------------------------");
+                     System.out.println("---------------메뉴-----------------");
+                     System.out.println("[1] 씨앗      [2] 주문 목록  [3] 공지사항");
+                     System.out.println("[4] 커뮤니티   [5] 마이페이지  [6] 로그아웃");
+                     System.out.println("-----------------------------------");
+                     System.out.println("-----------------------------------");
+                     System.out.println("메뉴를 선택하세요: ");
+      
+                     select_menu = keyboard.nextInt();
+                     
+                     /*로그아웃*/
+                     if(select_menu == 6)
+                        break;
+                     
+                     /*판매 기관 메뉴 실행*/
+                     switch(select_menu)
+                     {
+                     /*판매 기관: [1] 씨앗*/
+                     case 1:
+                        break;
+                        
+                     /*판매 기관: [2] 주문 목록*/
+                     case 2:
+                        break;
+                        
+                     /*판매 기관: [3] 공지사항*/
+                     case 3:
+                        break;
+                        
+                     /*판매 기관: [4] 커뮤니티*/
+                     case 4:
+                        break;
+                        
+                     /*판매 기관: [5] 마이페이지*/
+                     case 5:
+                        break;
+                     }
+                  }
+                  System.out.println("[판매 기관님의 접속을 종료합니다.]");
+                  break;
+               
+               /*3) 접속: 관리자*/
+               case 3:
+                  while(true)
+                  {
+                     /*관리자 메인 화면*/
+                     System.out.println("-----------------------------------");
+                     System.out.println("---------------메뉴-----------------");
+                     System.out.println("[1] 회원/기관 관리  [2] 주문목록  [3] 공지사항");
+                     System.out.println("[4] 커뮤니티   [5] 마이페이지  [6] 로그아웃");
+                     System.out.println("-----------------------------------");
+                     System.out.println("-----------------------------------");
+                     System.out.println("메뉴를 선택하세요: ");
+      
+                     select_menu = keyboard.nextInt();
+                     
+                     /*로그아웃*/
+                     if(select_menu == 6)
+                        break;
+                     
+                     /*관리자 메뉴 실행*/
+                     switch(select_menu)
+                     {
+                     /*관리자: [1] 회원/기관 관리*/
+                     case 1:
+                        break;
+                        
+                     /*관리자: [2] 주문 목록*/
+                     case 2:
+                        break;
+                        
+                        /*고객: [3] 공지사항*/
+                     case 3:
+                     {
+                        System.out.println("-----------------------------------");
+                         System.out.println("---------------메뉴-----------------");
+                         System.out.println("[1] 게시글 읽기  ");
+
+                        NBread(conn, stmt);
+                     
+                    
+                        break;
+                     }
+                        
+                     /*고객: [4] 커뮤니티*/
+                     case 4:
+                     {
+                        System.out.println("-----------------------------------");
+                         System.out.println("---------------메뉴-----------------");
+                         System.out.println("[1] 게시글 쓰기    [2] 게시글 검색  [3] 게시글 지우기");
+                         System.out.println("-----------------------------------");
+                         System.out.println("-----------------------------------");
+                         System.out.println("메뉴를 선택하세요: ");
+                         int select_menu1 = keyboard.nextInt();
+                         
+                         switch(select_menu1)
+                         {
+                           case 1:
+                              BBwrite(conn,stmt);
+                              break;
+                           case 2:
+                              BBread(conn, stmt);
+                              break;
+                           case 3:
+                              BBdelete(conn, stmt);
+                              break;                             
+                              
+                         }
+
+                     }  
+                     /*관리자: [5] 마이페이지*/
+                     case 5:
+                        break;
+                     }
+                  }
+                  System.out.println("[관리자님의 접속을 종료합니다.]");
+                  break;
+               }
+            }
+         }
+         else if(menu_num == 2)
+            Sign_up(conn, stmt);
+         else if(menu_num == 3)
+            break;
+            
+      }
+      
+      System.out.println("SEEDB를 종료합니다. 이용해주셔서 감사합니다.\n");
+      /***************************************************
+                       종료
+       ***************************************************/
+      // Release database resources.
+      
+      try {
+         // Close the Statement object.
+         if(stmt!=null)
+            stmt.close(); 
+         // Close the Connection object.
+         conn.close();
+      } catch (SQLException e) {
+         // TODO Auto-generated catch block
+         e.printStackTrace();
+      }
+   } //main 종료
+
+   
+   
+   /*로그인 함수*/
+   public static int Login(Connection conn, Statement stmt)
+   {
+      int result = 0;
+      String ID, PW, sql;
+      
+      int Login_menu_num;
+      System.out.println("[1] 로그인을 선택하셨습니다!\n\n");
+      System.out.println("-----------------------------------");
+      System.out.println("로그인하고자 하는 유형을 선택하십시오.");
+      System.out.println("---------------메뉴-----------------");
+      System.out.println("[1] 사용자/관리자       [2] 판매 기관");
+      System.out.println("-----------------------------------");
+      System.out.println("-----------------------------------");
+      
+      /*메뉴 입력받기*/
+      System.out.printf("<로그인 메뉴를 선택해주세요>: ");
+      Login_menu_num = keyboard.nextInt();
+      
+      switch(Login_menu_num)
+      {
+      case 1:
+         System.out.println("[1] 사용자/관리자를 선택하셨습니다!\n\n");
+         
+         int User_id_wrong = 0;
+         int User_pw_wrong = 0;
+         while(true)
+         {
+            /*3번째 실패 시 메인 화면으로 전환*/
+            if(User_id_wrong > 1 || User_pw_wrong > 1)
+            {
+               System.out.println("로그인에 실패하였습니다!\n\n\n");
+               result = 0;
+               break;
+            }
+            System.out.println("아이디와 비밀번호를 입력해주세요.\n\n");
+            System.out.printf("<아이디>: ");
+            ID = keyboard.next();
+            System.out.printf("<비밀번호>: ");
+            PW = keyboard.next();
+            try {
+               sql = "SELECT U.USERID, U.PW \r\n"
+                     + "FROM \"USER\" U \r\n"
+                     + "WHERE U.USERID = '" + ID + "'";
+               ResultSet rs = stmt.executeQuery(sql);
+               int count = 0;
+               while(true) 
+               {
+                  count++;
+                  if(!(rs.next()))
+                  {
+                     if(count == 1)
+                     {
+                        System.out.println("잘못된 아이디이거나 등록되지 않은 아이디입니다.");
+                        User_id_wrong++;
+                     }
+                     count = 0;
+                     break;
+                  }
+                     
+                  String real_id = rs.getString(1);
+                  String real_pw = rs.getString(2);
+                  
+                  if(real_pw.equals(PW))
+                  {
+                     /*접속자가 관리자 일 때*/
+                     if(real_id.contains("manager"))
+                        now_user = 3;
+                     
+                     System.out.printf("%s 님 반갑습니다!\n", ID);
+                     
+                     result = 1;
+                     return result;
+                  }
+                  else
+                  {
+                     System.out.println("잘못된 비밀번호입니다.\n");
+                     User_pw_wrong++;
+                  }
+               }
+               conn.commit();
+            }catch(SQLException ex2) {
+               System.err.println("sql error = " + ex2.getMessage());
+               System.exit(1);
+            }
+         }
+         break;
+       /*[2] 판매 기관*/
+      case 2:
+         System.out.println("[2] 사용자/관리자를 선택하셨습니다!\n\n");
+         
+         int Org_id_wrong = 0;
+         int Org_pw_wrong = 0;
+         while(true)
+         {
+            /*3번째 실패 시 메인 화면으로 전환*/
+            if(Org_id_wrong > 1 || Org_pw_wrong > 1)
+            {
+               System.out.println("로그인에 실패하였습니다!");
+               result = 0;
+               break;
+            }
+            System.out.println("기관 이름과 비밀번호를 입력해주세요.\n\n");
+            System.out.printf("<기관 이름>: ");
+            ID = keyboard.next();
+            System.out.printf("<비밀번호>: ");
+            PW = keyboard.next();
+            try {
+               sql = "SELECT O.ORGNAME, O.ORG_PW \r\n"
+                     + "FROM ORGANIZATION O \r\n"
+                     + "WHERE O.ORGNAME = '" + ID + "'";
+               ResultSet rs = stmt.executeQuery(sql);
+               int count = 0;
+               while(true) 
+               {
+                  count++;
+                  if(!(rs.next()))
+                  {
+                     if(count == 1)
+                     {
+                        System.out.println("잘못된 기관 이름이거나 등록되지 않은 기관입니다.");
+                        Org_id_wrong++;
+                     }
+                     count = 0;
+                     break;
+                  }
+                     
+                  String real_id = rs.getString(1);
+                  String real_pw = rs.getString(2);
+                  
+                  if(real_pw.equals(PW))
+                  {
+                     /*접속자가 기관 일 때*/
+                     now_user = 2;
+                     System.out.printf("%s 님 반갑습니다!\n", ID);
+                     
+                     result = 1;
+                     return result;
+                  }
+                  else
+                  {
+                     System.out.println("잘못된 비밀번호입니다.\n");
+                     Org_pw_wrong++;
+                  }
+               }
+               conn.commit();
+            }catch(SQLException ex2) {
+               System.err.println("sql error = " + ex2.getMessage());
+               System.exit(1);
+            }
+         }
+         break;
+       }
+      return result;
+   }//로그인 함수 종료
+   
+   
+   /*회원가입 함수*/
+   public static void Sign_up(Connection conn, Statement stmt)
+   {
+      String sql;
+      int SignUp_menu_num, res;
+      
+      System.out.println("[2] 회원가입을 선택하셨습니다!\n\n");
+      
+      System.out.println("-----------------------------------");
+      System.out.println("회원가입하고자 하는 유형을 선택하십시오.");
+      System.out.println("---------------메뉴-----------------");
+      System.out.println("[1] 사용자       [2] 판매 기관");
+      System.out.println("-----------------------------------");
+      System.out.println("-----------------------------------");
+      
+      /*메뉴 입력받기*/
+      System.out.printf("<회원가입 메뉴를 선택해주세요>: ");
+      SignUp_menu_num = keyboard.nextInt();
+      
+      switch(SignUp_menu_num)
+      {
+      /*회원가입: [1] 사용자/관리자*/
+      case 1:
+         System.out.println("회원가입: [1] 사용자를 선택하셨습니다!\n\n");
+         
+         String iUser_Id = null, iUser_Name, iUser_Pw, iUser_Addr, iUser_Age, iUser_PhoneN, iUser_Gender, iUser_Email;
+         int iUser_wrong_num = 0;
+         
+         System.out.println("회원가입을 진행합니다. manager를 포함하지 않는 id를 작성해주새요.\n");
+         while(true)
+         {
+            if(iUser_wrong_num > 1)
+            {
+               System.out.println("회원가입에 실패하였습니다. \n\n");
+               return;
+            }
+            System.out.printf("<아이디>: ");
+            iUser_Id = keyboard.next();
+            
+            if(iUser_Id.contains("manager"))
+            {
+               System.out.printf("id에 manager를 포함할 수 없습니다. 다시 입력해 주세요.\n\n");
+               continue;
+            }
+            
+            try {
+               sql = "SELECT U.USERID \r\n"
+                     + "FROM \"USER\" U \r\n"
+                     + "WHERE U.USERID = '" + iUser_Id + "'";
+               ResultSet rs = stmt.executeQuery(sql);
+               if(!(rs.next()))
+               {
+                  System.out.println("사용 가능한 아이디입니다.");
+                  break;
+               }
+               else
+               {
+                  iUser_wrong_num++;
+                  System.out.println("이미 존재하는 아이디입니다.");
+               }
+               
+            }catch(SQLException ex2) {
+               System.err.println("sql error = " + ex2.getMessage());
+               System.exit(1);
+            }
+         }
+         
+         System.out.printf("<성명>: ");
+         iUser_Name = keyboard.next();
+         
+         System.out.printf("<비밀번호>: ");
+         iUser_Pw = keyboard.next();
+         
+         System.out.printf("<주소>: ");
+         iUser_Addr = keyboard.next();
+         
+         System.out.printf("<나이>: ");
+         iUser_Age = keyboard.next();
+         
+         System.out.printf("<전화번호>: 010-xxxx-xxxx 형식으로 입력해 주세요: ");
+         iUser_PhoneN = keyboard.next();
+         
+         System.out.printf("<성별>: F(여성) 또는 M(남성)을 입력해 주세요: ");
+         iUser_Gender = keyboard.next();
+         
+         System.out.printf("<이메일 주소>: ");
+         iUser_Email = keyboard.next();
+         
+         try {
+            sql = "INSERT INTO \"USER\" VALUES ("
+                  + "'" + iUser_Id + "', "
+                  + "'" + iUser_Name + "', "
+                  + "'" + iUser_Pw + "', "
+                  + "'" + iUser_Addr + "', "
+                  + iUser_Age +", "
+                  + iUser_PhoneN + ", "
+                  + "'" + iUser_Gender + "'"
+                  + "'" + iUser_Email + "')";
+            res = stmt.executeUpdate(sql);
+            if(res == 1)
+            {
+               System.out.println("회원가입에 성공하였습니다.\n");
+               conn.commit();
+               return;
+            }
+            else
+            {
+               System.out.println("회원가입에 실패하였습니다.\n");
+               return;
+            }
+         }catch(SQLException ex2) {
+            System.err.println("sql error = " + ex2.getMessage());
+            System.exit(1);
+         }
+         break;
+      /*회원가입: [2] 판매 기관*/
+      case 2:
+         System.out.println("회원가입: [2] 판매 기관을 선택하셨습니다!\n\n");
+         String iOrgName = null, iOrg_Purpose, iOrg_Region, iOrg_AffiliateDate, iOrg_AffiliatePeriod, iOrg_PW;
+         int iOrg_wrong_num = 0;
+         
+         System.out.println("회원가입을 진행합니다. 기관 이름을 작성해주새요.\n");
+         while(true)
+         {
+            if(iOrg_wrong_num > 1)
+            {
+               System.out.println("회원가입에 실패하였습니다. \n\n");
+               return;
+            }
+            System.out.printf("<기관이름>: ");
+            iOrgName = keyboard.next();
+            
+            try {
+               sql = "SELECT O.ORGNAME \r\n"
+                     + "FROM ORGANIZATION O \r\n"
+                     + "WHERE O.ORGNAME = '" + iOrgName + "'";
+               ResultSet rs = stmt.executeQuery(sql);
+               if(!(rs.next()))
+               {
+                  System.out.println("등록 가능한 기관입니다.");
+                  break;
+               }
+               else
+               {
+                  iOrg_wrong_num++;
+                  System.out.println("이미 존재하는 기관입니다.");
+               }
+               
+            }catch(SQLException ex2) {
+               System.err.println("sql error = " + ex2.getMessage());
+               System.exit(1);
+            }
+         }
+         
+         System.out.printf("<기관 목적: L(대여) 또는 S(판매)를 입력해주세요.>: ");
+         iOrg_Purpose = keyboard.next();
+         
+         System.out.printf("<지역>: ");
+         iOrg_Region = keyboard.next();
+         
+         System.out.printf("<제휴시작 날짜: yyyy-mm-dd 형식으로 입력해주세요. ex) 2021-03-01>: ");
+         iOrg_AffiliateDate = keyboard.next();
+         
+         System.out.printf("<제휴기간: 일 수로 입력해주세요. ex) 365>: ");
+         iOrg_AffiliatePeriod = keyboard.next();
+         
+         System.out.printf("<비밀번호>: ");
+         iOrg_PW = keyboard.next();
+         
+         try {
+            sql = "INSERT INTO ORGANIZATION VALUES ("
+                  + "'" + iOrgName + "', "
+                  + "'" + iOrg_Purpose + "', "
+                  + "'" + iOrg_Region + "', "
+                  + "'" + iOrg_AffiliateDate + "', "
+                  + iOrg_AffiliatePeriod +", "
+                  + "'" + iOrg_PW + "')";
+            res = stmt.executeUpdate(sql);
+            if(res == 1)
+            {
+               System.out.println("회원가입에 성공하였습니다.\n");
+               conn.commit();
+               return;
+            }
+            else
+            {
+               System.out.println("회원가입에 실패하였습니다.\n");
+               return;
+            }
+         }catch(SQLException ex2) {
+            System.err.println("sql error = " + ex2.getMessage());
+            System.exit(1);
+         }
+         break;
+      } // 회원가입 분류 switch문 종료
+   }// 회원가입 함수 종료
+   
+   
+   
+   public static void orderoption(Connection conn, Statement stmt) {
+      System.out.println("씨앗 주문 방법을 선택해주세요.");
+      System.out.println("[1] 이름으로 검색하기  [2] 용도에 따라 검색하기  [3] 인기 순위에 따라 검색하기");
+      String OrderMenu = keyboard.next();
+      
+      if (OrderMenu.equalsIgnoreCase("1")) {
+         System.out.println("\r\n'[1] 이름으로 검색하기'를 선택하셨습니다!\r\n");
+         
+         // 씨앗 전체 목록 출력
+         try {
+            String sql = "SELECT DISTINCT S.SeedName \r\n"
+                  + "FROM SEED S \r\n";            
+            ResultSet rs = stmt.executeQuery(sql);
+            System.out.println("SEEDNAME");
+            System.out.println("------------------------------------");
+            while (rs.next()) {
+               String outputSeedName = rs.getString(1);
+               System.out.println(outputSeedName);
+            }
+         }catch(SQLException ex2) {
+            System.err.println("sql error = " + ex2.getMessage());
+            System.exit(1);
+         }
+         ordering(conn, stmt);
+      }
+      else if (OrderMenu.equalsIgnoreCase("2")) {
+         System.out.println("\r\n'[2] 용도에 따라 검색하기'를 선택하셨습니다!\r\n");
+         
+         // 씨앗 용도 출력
+         try {
+            String sql = "SELECT DISTINCT S.SeedPurPose \r\n"
+                  + "FROM SEED S \r\n";            
+            ResultSet rs = stmt.executeQuery(sql);
+            System.out.println("씨앗 용도");
+            System.out.println("------------------------------------");
+            while (rs.next()) {
+               String outputSeedPurPose = rs.getString(1);
+               System.out.println(outputSeedPurPose);
+            }
+         }catch(SQLException ex2) {
+            System.err.println("sql error = " + ex2.getMessage());
+            System.exit(1);
+         }
+         
+         String inputSeedPurPose = keyboard.next();   // 씨앗 용도 입력받기
+         // 용도에 따른 씨앗 출력
+         try {
+            String sql = "SELECT DISTINCT S.SeedName \r\n"
+                  + "FROM SEED S \r\n"
+                  + "WHERE S.SeedPurPose LIKE '" + inputSeedPurPose + "'";
+            ResultSet rs = stmt.executeQuery(sql);
+            System.out.println("씨앗 이름");
+            System.out.println("------------------------------------");
+            while (rs.next()) {
+               String outputSeedName = rs.getString(1);
+               System.out.println(outputSeedName);
+            }
+         }catch(SQLException ex2) {
+            System.err.println("sql error = " + ex2.getMessage());
+            System.exit(1);
+         }
+         ordering(conn, stmt);
+      }
+      
+      else if (OrderMenu.equalsIgnoreCase("3")) {
+         System.out.println("\r\n'[3] 인기순위에 따라 검색하기'를 선택하셨습니다!\r\n");
+         System.out.println("[1] 나이별 인기 순위  [2] 기간별 인기 순위");
+         int topMenu = keyboard.nextInt();
+         String VarietyID = "";
+
+         
+         if (topMenu == 1) {
+            System.out.println("\r\n'[1] 나이별 인기순위에 따라 검색하기'를 선택하셨습니다!\r\n");
+            System.out.println("[1] 청소년  [2] 청년  [3] 중년  [4] 장년");
+            // varietyID를 입력
+            String ageMenu = keyboard.next();
+            String[] ary = new String[6];
+            int cnt = 0;
+            if (ageMenu.equalsIgnoreCase("1")) {
+               System.out.println("\r\n'[1] 청소년 인기순위 검색하기'를 선택하셨습니다!\r\n");
+               try {
+                  String sql = "SELECT\r\n"
+                        + "    DENSE_RANK() OVER (ORDER BY VARIETYCOUNT DESC, Total_QUANTITY DESC) ORDER_COUNT, TEEN_VARIETYNAME AS VARIETY_NAME\r\n"
+                        + "FROM\r\n"
+                        + "    (\r\n"
+                        + "        SELECT OD_VarietyID AS TEEN_VARIETYNAME, COUNT(*) AS VARIETYCOUNT, SUM(Quantity) AS Total_QUANTITY\r\n"
+                        + "        FROM (\r\n"
+                        + "                SELECT OD_UserID, OD_VarietyID, Age, Quantity\r\n"
+                        + "                FROM (\r\n"
+                        + "                        SELECT OD.OD_USERID, OD.OD_VarietyID, AGE, OD.Quantity\r\n"
+                        + "                        FROM \"ORDER\" OD\r\n"
+                        + "                        INNER JOIN \"USER\" U ON OD.OD_UserID = U.UserID\r\n"
+                        + "                     )\r\n"
+                        + "                WHERE Age < 20\r\n"
+                        + "             )\r\n"
+                        + "        GROUP BY OD_VarietyID\r\n"
+                        + "        ORDER BY COUNT(OD_VarietyID) DESC\r\n"
+                        + "    )\r\n"
+                        + "WHERE ROWNUM < 6";
+                  ResultSet rs = stmt.executeQuery(sql);
+                  System.out.println("씨앗 이름");
+                  System.out.println("------------------------------------");
+                  while (rs.next()) {
+                     String OrderCount = rs.getString(1);
+                     VarietyID = rs.getString(2);
+                     
+                  }
+               }catch(SQLException ex2) {
+                  System.err.println("sql error = " + ex2.getMessage());
+                  System.exit(1);
+               }
+            }
+            else if (ageMenu.equalsIgnoreCase("2")) {
+               System.out.println("\r\n'[2] 청년 인기순위 검색하기'를 선택하셨습니다!\r\n");
+               try {
+                  String sql = "SELECT\r\n"
+                        + "    DENSE_RANK() OVER (ORDER BY VARIETYCOUNT DESC, Total_QUANTITY DESC) ORDER_COUNT, TEEN_VARIETYNAME AS VARIETY_NAME\r\n"
+                        + "FROM\r\n"
+                        + "    (\r\n"
+                        + "        SELECT OD_VarietyID AS TEEN_VARIETYNAME, COUNT(*) AS VARIETYCOUNT, SUM(Quantity) AS Total_QUANTITY\r\n"
+                        + "        FROM (\r\n"
+                        + "                SELECT OD_UserID, OD_VarietyID, Age, Quantity\r\n"
+                        + "                FROM (\r\n"
+                        + "                        SELECT OD.OD_USERID, OD.OD_VarietyID, AGE, OD.Quantity\r\n"
+                        + "                        FROM \"ORDER\" OD\r\n"
+                        + "                        INNER JOIN \"USER\" U ON OD.OD_UserID = U.UserID\r\n"
+                        + "                     )\r\n"
+                        + "                WHERE 20 <= Age AND AGE < 31\r\n"
+                        + "             )\r\n"
+                        + "        GROUP BY OD_VarietyID\r\n"
+                        + "        ORDER BY COUNT(OD_VarietyID) DESC\r\n"
+                        + "    )\r\n"
+                        + "WHERE ROWNUM < 6";
+                  ResultSet rs = stmt.executeQuery(sql);
+                  System.out.println("씨앗 이름");
+                  System.out.println("------------------------------------");
+                  while (rs.next()) {
+                     String OrderCount = rs.getString(1);
+                     VarietyID = rs.getString(2);
+                                             }
+               }catch(SQLException ex2) {
+                  System.err.println("sql error = " + ex2.getMessage());
+                  System.exit(1);
+               }
+            }
+            else if (ageMenu.equalsIgnoreCase("3")) {
+               System.out.println("\r\n'[3] 중년 인기순위 검색하기'를 선택하셨습니다!\r\n");
+               try {
+                  String sql = "SELECT\r\n"
+                        + "    DENSE_RANK() OVER (ORDER BY VARIETYCOUNT DESC, Total_QUANTITY DESC) ORDER_COUNT, TEEN_VARIETYNAME AS VARIETY_NAME\r\n"
+                        + "FROM\r\n"
+                        + "    (\r\n"
+                        + "        SELECT OD_VarietyID AS TEEN_VARIETYNAME, COUNT(*) AS VARIETYCOUNT, SUM(Quantity) AS Total_QUANTITY\r\n"
+                        + "        FROM (\r\n"
+                        + "                SELECT OD_UserID, OD_VarietyID, Age, Quantity\r\n"
+                        + "                FROM (\r\n"
+                        + "                        SELECT OD.OD_USERID, OD.OD_VarietyID, AGE, OD.Quantity\r\n"
+                        + "                        FROM \"ORDER\" OD\r\n"
+                        + "                        INNER JOIN \"USER\" U ON OD.OD_UserID = U.UserID\r\n"
+                        + "                     )\r\n"
+                        + "                WHERE 31 <= AGE AND AGE < 51\r\n"
+                        + "             )\r\n"
+                        + "        GROUP BY OD_VarietyID\r\n"
+                        + "        ORDER BY COUNT(OD_VarietyID) DESC\r\n"
+                        + "    )\r\n"
+                        + "WHERE ROWNUM < 6";
+                  ResultSet rs = stmt.executeQuery(sql);
+                  System.out.println("씨앗 이름");
+                  System.out.println("------------------------------------");
+                  while (rs.next()) {
+                     String OrderCount = rs.getString(1);
+                     VarietyID = rs.getString(2);
+                  }
+               }catch(SQLException ex2) {
+                  System.err.println("sql error = " + ex2.getMessage());
+                  System.exit(1);
+               }
+            }
+            else if (ageMenu.equalsIgnoreCase("4")) {
+               System.out.println("\r\n'[4] 장년 인기순위 검색하기'를 선택하셨습니다!\r\n");
+               try {
+                  String sql = "SELECT\r\n"
+                        + "    DENSE_RANK() OVER (ORDER BY VARIETYCOUNT DESC, Total_QUANTITY DESC) ORDER_COUNT, TEEN_VARIETYNAME AS VARIETY_NAME\r\n"
+                        + "FROM\r\n"
+                        + "    (\r\n"
+                        + "        SELECT OD_VarietyID AS TEEN_VARIETYNAME, COUNT(*) AS VARIETYCOUNT, SUM(Quantity) AS Total_QUANTITY\r\n"
+                        + "        FROM (\r\n"
+                        + "                SELECT OD_UserID, OD_VarietyID, Age, Quantity\r\n"
+                        + "                FROM (\r\n"
+                        + "                        SELECT OD.OD_USERID, OD.OD_VarietyID, AGE, OD.Quantity\r\n"
+                        + "                        FROM \"ORDER\" OD\r\n"
+                        + "                        INNER JOIN \"USER\" U ON OD.OD_UserID = U.UserID\r\n"
+                        + "                     )\r\n"
+                        + "                WHERE 51 <= Age\r\n"
+                        + "             )\r\n"
+                        + "        GROUP BY OD_VarietyID\r\n"
+                        + "        ORDER BY COUNT(OD_VarietyID) DESC\r\n"
+                        + "    )\r\n"
+                        + "WHERE ROWNUM < 6";
+                  ResultSet rs = stmt.executeQuery(sql);
+                  System.out.println("씨앗 이름");
+                  System.out.println("------------------------------------");
+                  while (rs.next()) {
+                     String OrderCount = rs.getString(1);
+                     VarietyID = rs.getString(2);
+                  }
+               }catch(SQLException ex2) {
+                  System.err.println("sql error = " + ex2.getMessage());
+                  System.exit(1);
+               }
+            }
+         }
+         /*
+         else if (topMenu.equalsIgnoreCase("2")) {
+            System.out.println("\r\n'[2] 기간별 인기순위'를 선택하셨습니다!\r\n");
+            System.out.println("[1] 오늘  [2] 일주일  [3] 한달  [4] 1년  [ESC] 뒤로 가기  [HOME] 홈으로 가기\r\n");
+         
+         }
+         else if (topMenu.equalsIgnoreCase("ESC")) {
+            break;
+         }
+         else if (topMenu.equalsIgnoreCase("HOME")) {
+            home();
+         }
+         */
+      }            
+   }
+   
+   
+   public static void home(Connection conn, Statement stmt) {
+      System.out.println("welcome");
+   }
+   
+   public static void ordering(Connection conn, Statement stmt) {
+	  int OrgCnt = 0;
+	  String inputSeedName = "";
+	  String inputVarietyName = "";
+      // 품종 목록 출력
+	  while (true)
+	  {
+		  // 씨앗 품종 목록이랑 보유기관 출력
+		  System.out.println("\r\n<< 구매/대여 하실 씨앗의 이름을 알려주세요 >>");
+		  inputSeedName = keyboard.next();
+		  
+		  try {
+			  String sql = "SELECT S.VarietyName, ORG.OrgName, ORG.Org_Purpose \r\n"
+					  + "FROM \"SEED\" S FULL OUTER JOIN HAS H ON S.VarietyID = H.VarietyID FULL OUTER JOIN ORGANIZATION ORG ON H.OrgName = ORG.OrgName \r\n"
+					  + "WHERE S.SeedName LIKE '" + inputSeedName + "'";
+			  ResultSet rs = stmt.executeQuery(sql);
+			  System.out.println("<< 검색하신 씨앗의 품종 그 씨앗을 보유하고 있는 기관의 목록입니다 >>");
+			  System.out.println("Selected SEEDNAME: " + inputSeedName);
+			  System.out.println("VARIETYNAME | ORGANIZATION NAME               | PURPOSE");
+			  System.out.println("--------------------------------------------------------");
+         
+			  while (rs.next()) {
+				  String outputVarietyName = rs.getString(1);
+				  String outputOrgName = rs.getString(2);
+				  String outputOrgPurpose = rs.getString(3);
+				  if (outputOrgName != null)
+					  OrgCnt++;
+				  if (OrgCnt > 0)
+					  System.out.printf("%10s | %30s | %s\n", outputVarietyName, outputOrgName, outputOrgPurpose);
+			  }
+			  if (OrgCnt != 0)
+				  break;
+			  System.out.println("죄송합니다. 그 씨앗을 보유한 기관이 없습니다. 다른 씨앗 및 품종을 다시 검색해주세요.");
+		  }catch(SQLException ex2) {
+			  System.err.println("sql error = " + ex2.getMessage());
+			  System.exit(1);
+		  }
+	  }
+         
+      // 기관 선택 후 수량 선택(자동으로 구매/대여 결정)
+      System.out.println("\r\n<< 어느 기관의 씨앗을 구매/대여 하겠습니까? >>");
+      String inputOrgName = keyboard.next();
+      String inputOrgPurpose = "";
+      String PurposeKOR = "";
+      // 목적 자동 입력
+      try {
+         String sql = "SELECT Org_Purpose \r\n"
+               + "FROM ORGANIZATION \r\n"
+               + "WHERE OrgName LIKE '" + inputOrgName + "' \r\n";
+         
+         ResultSet rs = stmt.executeQuery(sql);
+         while (rs.next()) {
+            inputOrgPurpose = rs.getString(1);
+         }
+         if (inputOrgPurpose.equalsIgnoreCase("R"))
+            PurposeKOR = "대여";
+         else
+            PurposeKOR = "구매";
+      }catch(SQLException ex2) {
+         System.err.println("sql error = " + ex2.getMessage());
+         System.exit(1);
+      }
+      System.out.println("\r\n<< 얼마나 많은 양의 씨앗을 구매/대여 할지 입력해주세요. (단위는 g입니다!) >>");
+      int inputQuantity = keyboard.nextInt();
+      keyboard.nextLine();
+      
+      // 주문 내역 확인
+      System.out.println("\r\n<< 주문 내역을 확인해주시고, 맞으면 YES, 틀리면 NO를 입력해 주세요 >>");
+      System.out.println("씨앗 이름: " + inputSeedName + ", 품종명: " + inputVarietyName + ", 대여/구매 기관: " + inputOrgName + " (" + PurposeKOR + "), 수량: " + inputQuantity + "g");
+               
+      String answer = keyboard.next();
+      if (answer.equalsIgnoreCase("YES")) {
+    	  /*---------------------------------------------*/
+    	 // 로그인 클래스 만들어지면 INSERT부분 수정하겠습니다
+    	  /*---------------------------------------------*/
+         System.out.print("유저 아이디: ");
+         String UserID = keyboard.next();
+         try {
+               // VarietyID 구하기
+               String outputVarietyID = "id";
+               String sql = "SELECT S.VarietyID \r\n"
+                     + "FROM \"SEED\" S FULL OUTER JOIN HAS H ON S.VarietyID = H.VarietyID \r\n"
+                     + "WHERE S.SeedName LIKE '" + inputSeedName + "' \r\n"
+                     + "AND S.VarietyName LIKE'" + inputVarietyName + "' \r\n"
+                     + "AND H.OrgName LIKE '" + inputOrgName + "'";
+               ResultSet rs = stmt.executeQuery(sql);
+               while (rs.next()) {
+                  outputVarietyID = rs.getString(1);
+                  System.out.println(outputVarietyID);
+               }
+               sql = "INSERT INTO \"ORDER\" VALUES (ORDER_SEQ.NEXTVAL, '" + UserID + "', TO_CHAR(SYSDATE, 'YYYY.MM.DD HH24:MI'), '" + inputOrgPurpose + "', '" + inputOrgName + "', '" + outputVarietyID + "', " + inputQuantity + ")";
+               System.out.println(sql);
+               rs = stmt.executeQuery(sql);
+               System.out.println("\r\n<< 주문이 완료되었습니다. >>");
+               conn.commit();
+         }catch(SQLException ex2) {
+            System.err.println("sql error = " + ex2.getMessage());
+            System.exit(1);
+         }
+      }
+   }
+   
+   
+   public static void myOrderList(Connection conn, Statement stmt) {
+      System.out.println("<< 주문 목록 출력을 위해 본인의 아이디를 입력해주세요 >>");
+      System.out.print("ID: ");
+      String UserID = keyboard.next();
+      try {
+         // VarietyID 구하기
+         String sql = "SELECT OrderNum, Purchase_Date, Order_Purpose, OD_OrgName, OD_VarietyID, Quantity \r\n"
+               + "FROM \"ORDER\" \r\n"
+               + "WHERE OD_UserID LIKE '" + UserID + "' \r\n";
+         ResultSet rs = stmt.executeQuery(sql);
+         System.out.println(UserID + "의 주문 내역");
+         System.out.println("------------------------------------------");
+         while (rs.next()) {
+            String outputOrderNum = rs.getString(1);
+            String outputPurchaseDate = rs.getString(2);
+            String outputOrderPurpose = rs.getString(3);
+            String outputOrgName = rs.getString(4);
+            String outputVarietyID = rs.getString(5);
+            String outputQuantity = rs.getString(6);
+            System.out.println("주문번호: " + outputOrderNum + " | 주문날짜: " + outputPurchaseDate + " | 주문 목적: " + outputOrderPurpose + " | 주문 기관: " + outputOrgName + " | 품종 번호: " +outputVarietyID + " | 주문량(g) : " + outputQuantity);
+         }
+
+      }catch(SQLException ex2) {
+      System.err.println("sql error = " + ex2.getMessage());
+      System.exit(1);
+      }
+   }
+   
+   public static void BBwrite(Connection conn, Statement stmt)
+    {
+        
+        String Purpose;
+        String Title;
+        String UserID;
+        String Content;
+        
+        Scanner scan = new Scanner(System.in);
+        
+        System.out.println("목적 : ");
+        Purpose = scan.nextLine();
+        System.out.println("제목 : ");
+        Title = scan.nextLine();
+        System.out.println("아이디 : ");
+        UserID = scan.nextLine();
+        System.out.println("내용 : ");
+        Content = scan.nextLine();
+
+        try {
+            String sql = "insert into BULLETIN_BOARD"
+                                +"(BWNum,BWPurpose,BWTitle,BUserID,BWTime,BWContent)"
+                                +"values"
+                                +"(BW_SEQ.NEXTVAL, '" + Purpose + "', '" + Title + "', '" + UserID + "', TO_CHAR(SYSDATE, 'YYYY.MM.DD HH24:MI'), '" + Content + "')";
+            
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+
+            pstmt.setString(2, Purpose);
+            pstmt.setString(3, Title);
+            pstmt.setString(4, UserID);
+            pstmt.setString(6, Content);
+            int rowCount = pstmt.executeUpdate();
+            System.out.println(rowCount + "개의 행이 추가되었습니다.");
+        }catch(SQLException ex2) {
+          System.err.println("sql error = " + ex2.getMessage());
+          System.exit(1);
+       }
+    }
+
+
+
+
+
+
+
+
+
+   public static void NBwrite(Connection conn, Statement stmt)
+    {
+       
+
+        String Title;     
+        String Content;
+        
+        Scanner scan = new Scanner(System.in);
+        
+        
+        System.out.println("제목 : ");
+        Title = scan.nextLine();
+        System.out.println("내용 : ");
+        Content = scan.nextLine();
+
+        try {
+          // VarietyID 구하기
+            String sql = "insert into NOTICE_BOARD"
+                    +"(NWNum,NWTitle,NWTime,NWContent)"
+                    +"values"
+                    +"(NW_SEQ.NEXTVAL, '" + Title + "', TO_CHAR(SYSDATE, 'YYYY.MM.DD HH24:MI'), '" + Content +"')"; 
+               
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(2, Title);
+            pstmt.setString(4, Content);
+            int rowCount = pstmt.executeUpdate();
+            System.out.println(rowCount + "개의 행이 추가되었습니다.");
+                
+            pstmt.close();
+            conn.close();
+        }catch(SQLException ex2) {
+           System.err.println("sql error = " + ex2.getMessage());
+          System.exit(1);
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+   public static void BBread(Connection conn, Statement stmt)
+    {
+        System.out.println("1. 제목으로 검색  2.회원 아이디로 검색");
+        Scanner a = new Scanner(System.in);
+        int se = keyboard.nextInt();
+        if (se == 1) 
+        {
+           System.out.println("검색할 제목을 입력하세요\n");
+           String title = keyboard.nextLine();
+           keyboard.nextLine();
+        
+           try {
+              String sql = "select *"
+                    + "from BULLETIN_BOARD"
+                    + "where BWTitle LIKE '%" + title +"%'";
+
+              //Class.forName("oracle.jdbc.OracleDriver");
+              PreparedStatement pstmt = conn.prepareStatement(sql);
+              ResultSet rs = pstmt.executeQuery();
+              while(rs.next()) {
+                 int no = rs.getInt("BWNum");
+                 String p = rs.getString("BWPurpose");
+                 String title1 = rs.getString("BWTitle");
+                 String id = rs.getString("BUserID");
+                 String co = rs.getString("BWContent");
+
+                 System.out.println(no+", "+p+", "+title1+", "+id+", "+co);
+              }
+           }catch(SQLException ex2) {
+              System.err.println("sql error = " + ex2.getMessage());
+              System.exit(1);
+           }
+        }
+        else
+        {
+           System.out.println("검색할 회원 아이디를 입력하세요\n");
+            String id = keyboard.nextLine();
+            
+            
+            
+            try {
+               String sql = "select *"
+                        + "from BULLETIN_BOARD"
+                        + "where BUserID LIKE '"+id+"' ";
+
+               //Class.forName("oracle.jdbc.OracleDriver");
+           
+               PreparedStatement pstmt = conn.prepareStatement(sql);
+
+               ResultSet rs = pstmt.executeQuery();
+               while(rs.next()) {
+                              int no = rs.getInt("BWNum");
+                              String p = rs.getString("BWPurpose");
+                              String title = rs.getString("BWTitle");
+                              String id1 = rs.getString("BUserID");
+                              String co = rs.getString("BWContent");
+                              System.out.println(no+", "+p+", "+title+", "+id1+", "+co);
+               }
+            }catch(SQLException ex2) {
+              System.err.println("sql error = " + ex2.getMessage());
+              System.exit(1);
+           }
+        }
+    }
+
+   
+
+        public static void NBread(Connection conn, Statement stmt)
+        {
+           try {
+              System.out.println("검색할 제목을 입력하세요\n");
+              String title = keyboard.nextLine();
+        
+              String sql = "select *"
+                         + "from NOTICE_BOARD"
+                         + "where NWTitle LIKE '%" +title+"%' ";
+
+              //Class.forName("oracle.jdbc.OracleDriver");
+        
+              PreparedStatement pstmt = conn.prepareStatement(sql);
+
+        
+              ResultSet rs = pstmt.executeQuery();
+
+              while(rs.next()) {
+                               int no = rs.getInt("NWNum");
+                               String title1 = rs.getString("NWTitle");
+                               String con = rs.getString("NWContent");
+
+                               System.out.println(no+", "+title1+", "+con);
+                 }
+           }catch(SQLException ex2) {
+              System.err.println("sql error = " + ex2.getMessage());
+              System.exit(1);
+           }
+        }
+    
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+    public static void BBdelete(Connection conn, Statement stmt)
+    {
+        int num;
+        
+        Scanner scan = new Scanner(System.in);
+        
+        System.out.println("삭제를 원하는 글번호 : ");
+        num = scan.nextInt();
+        
+        
+        try {
+           String sql ="delete from BULLETIN_BOARD where BWNum = ?";
+            //Class.forName("oracle.jdbc.OracleDriver");
+
+            
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1,num);
+            int rowCount = pstmt.executeUpdate();
+            System.out.println(rowCount + "개의 글이 삭제되었습니다.");
+       }catch(SQLException ex2) {
+          System.err.println("sql error = " + ex2.getMessage());
+          System.exit(1);
+       }
+    }
+
+
+   public static void NBdelete(Connection conn, Statement stmt) 
+   {
+        int num;
+        
+        Scanner scan = new Scanner(System.in);
+        
+        System.out.println("삭제를 원하는 글번호 : ");
+        num = scan.nextInt();
+
+        try {
+           String sql ="delete from NOTICE_BOARD where NWNum = ?";
+            //Class.forName("oracle.jdbc.OracleDriver");
+        
+             
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1,num);
+            int rowCount = pstmt.executeUpdate();
+            System.out.println(rowCount + "개의 글이 삭제되었습니다.");
+        }catch(SQLException ex2) {
+          System.err.println("sql error = " + ex2.getMessage());
+          System.exit(1);
+       }
+    
+   }
+}
