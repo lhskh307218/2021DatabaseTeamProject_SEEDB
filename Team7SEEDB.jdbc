@@ -139,7 +139,7 @@ public class Team7_SEEDB_JDBCC {
                case 2:
                   while(true)
                   {
-                     /*판메 기관 메인 화면*/
+                     /*판매 기관 메인 화면*/
                      System.out.println("-----------------------------------");
                      System.out.println("---------------메뉴-----------------");
                      System.out.println("[1] 씨앗      [2] 주문 목록  [3] 공지사항");
@@ -163,6 +163,7 @@ public class Team7_SEEDB_JDBCC {
                         
                      /*판매 기관: [2] 주문 목록*/
                      case 2:
+                    	OrgOrderList(conn, stmt);
                         break;
                         
                      /*판매 기관: [3] 공지사항*/
@@ -209,6 +210,7 @@ public class Team7_SEEDB_JDBCC {
                         
                      /*관리자: [2] 주문 목록*/
                      case 2:
+                    	manOrderList(conn, stmt);
                         break;
                         
                         /*고객: [3] 공지사항*/
@@ -653,23 +655,54 @@ public class Team7_SEEDB_JDBCC {
          
          // 씨앗 전체 목록 출력
          try {
-            String sql = "SELECT DISTINCT S.SeedName \r\n"
-                  + "FROM SEED S \r\n";            
+            String sql = "SELECT SeedName, VarietyName, H.OrgName, Org_Purpose\r\n"
+            		+ "FROM \"SEED\" S INNER JOIN HAS H ON S.VarietyID = H.VarietyID INNER JOIN \"ORGANIZATION\" ORG ON H.OrgName = ORG.OrgName";            
             ResultSet rs = stmt.executeQuery(sql);
-            System.out.println("SEEDNAME");
+            System.out.println("SEEDNAME | VARIETYNAME | ORGNAME | ORG_PURPOSE");
             System.out.println("------------------------------------");
             while (rs.next()) {
                String outputSeedName = rs.getString(1);
-               System.out.println(outputSeedName);
+               String outputVarietyName = rs.getString(2);
+               String outputOrgName = rs.getString(3);
+               String outputOrgPurpose = rs.getString(4);
+               System.out.println(outputSeedName + " | " + outputVarietyName + " | " + outputOrgName + " | " + outputOrgPurpose);
             }
          }catch(SQLException ex2) {
             System.err.println("sql error = " + ex2.getMessage());
             System.exit(1);
          }
+         
+         
+         
+         
+         /*
+         // 구매/대여를 원하는 씨앗 검색
+         try {
+   		  	String sql = "SELECT S.VarietyName, ORG.OrgName, ORG.Org_Purpose \r\n"
+   				  + "FROM \"SEED\" S INNER JOIN HAS H ON S.VarietyID = H.VarietyID INNER JOIN ORGANIZATION ORG ON H.OrgName = ORG.OrgName \r\n"
+   				  + "WHERE S.SeedName LIKE '" + inputSeedName + "'";
+   		  	ResultSet rs = stmt.executeQuery(sql);
+   		  	System.out.println("<< 검색하신 씨앗의 품종 그 씨앗을 보유하고 있는 기관의 목록입니다 >>");
+   		  	System.out.println("Selected SEEDNAME: " + inputSeedName);
+   		  	System.out.println("VARIETYNAME | ORGANIZATION NAME               | PURPOSE");
+   		  	System.out.println("--------------------------------------------------------");
+            
+   		  	while (rs.next()) {
+   		  		String outputVarietyName = rs.getString(1);
+   		  		String outputOrgName = rs.getString(2);
+   		  		String outputOrgPurpose = rs.getString(3);
+   		  		System.out.println(outputVarietyName + " | " + outputOrgName + " | " + outputOrgPurpose);
+   		  	}
+   	  	}catch(SQLException ex2) {
+   	  		System.err.println("sql error = " + ex2.getMessage());
+   	  		System.exit(1);
+   	  	}
+         */
          ordering(conn, stmt);
       }
       else if (OrderMenu.equalsIgnoreCase("2")) {
          System.out.println("\r\n'[2] 용도에 따라 검색하기'를 선택하셨습니다!\r\n");
+         int orgcnt = 0;
          
          // 씨앗 용도 출력
          try {
@@ -687,18 +720,27 @@ public class Team7_SEEDB_JDBCC {
             System.exit(1);
          }
          
-         String inputSeedPurPose = keyboard.next();   // 씨앗 용도 입력받기
+         String inputSeedPurPose = "";
+         inputSeedPurPose = keyboard.next();   // 씨앗 용도 입력받기
          // 용도에 따른 씨앗 출력
          try {
-            String sql = "SELECT DISTINCT S.SeedName \r\n"
-                  + "FROM SEED S \r\n"
-                  + "WHERE S.SeedPurPose LIKE '" + inputSeedPurPose + "'";
+            String sql = "SELECT SeedName, VarietyName, H.OrgName, Org_Purpose\r\n"
+            		+ "FROM \"SEED\" S INNER JOIN HAS H ON S.VarietyID = H.VarietyID INNER JOIN \"ORGANIZATION\" ORG ON H.OrgName = ORG.OrgName\r\n"
+            		+ "WHERE S.SeedPurpose = '" + inputSeedPurPose + "'";
             ResultSet rs = stmt.executeQuery(sql);
-            System.out.println("씨앗 이름");
-            System.out.println("------------------------------------");
+            System.out.println("SEEDNAME | VARIETYNAME | ORGNAME | ORG_PURPOSE");
+            System.out.println("-----------------------------------------------");
             while (rs.next()) {
-               String outputSeedName = rs.getString(1);
-               System.out.println(outputSeedName);
+            	String outputSeedName = rs.getString(1);
+                String outputVarietyName = rs.getString(2);
+                String outputOrgName = rs.getString(3);
+                String outputOrgPurpose = rs.getString(4);
+                System.out.println(outputSeedName + " | " + outputVarietyName + " | " + outputOrgName + " | " + outputOrgPurpose);
+                orgcnt++;
+            }
+            if (orgcnt == 0) {
+            	System.out.println("죄송합니다. '" + inputSeedPurPose + "' 씨앗을 보유한 기관이 없습니다.");
+            	return;
             }
          }catch(SQLException ex2) {
             System.err.println("sql error = " + ex2.getMessage());
@@ -708,167 +750,294 @@ public class Team7_SEEDB_JDBCC {
       }
       
       else if (OrderMenu.equalsIgnoreCase("3")) {
-         System.out.println("\r\n'[3] 인기순위에 따라 검색하기'를 선택하셨습니다!\r\n");
+         System.out.println("\r\n[3] 인기순위에 따라 검색하기를 선택하셨습니다!\r\n");
          System.out.println("[1] 나이별 인기 순위  [2] 기간별 인기 순위");
          int topMenu = keyboard.nextInt();
-         String VarietyID = "";
+         String VarietyName = "";
+         String SeedName = "";
 
          
          if (topMenu == 1) {
             System.out.println("\r\n'[1] 나이별 인기순위에 따라 검색하기'를 선택하셨습니다!\r\n");
-            System.out.println("[1] 청소년  [2] 청년  [3] 중년  [4] 장년");
+            System.out.println("	[1] 청소년  [2] 청년  [3] 중년  [4] 장년");
             // varietyID를 입력
-            String ageMenu = keyboard.next();
-            String[] ary = new String[6];
-            int cnt = 0;
-            if (ageMenu.equalsIgnoreCase("1")) {
+            int ageMenu = keyboard.nextInt();
+            if (ageMenu == 1) {
                System.out.println("\r\n'[1] 청소년 인기순위 검색하기'를 선택하셨습니다!\r\n");
                try {
+            	  // 품종 번호 출력
                   String sql = "SELECT\r\n"
-                        + "    DENSE_RANK() OVER (ORDER BY VARIETYCOUNT DESC, Total_QUANTITY DESC) ORDER_COUNT, TEEN_VARIETYNAME AS VARIETY_NAME\r\n"
-                        + "FROM\r\n"
-                        + "    (\r\n"
-                        + "        SELECT OD_VarietyID AS TEEN_VARIETYNAME, COUNT(*) AS VARIETYCOUNT, SUM(Quantity) AS Total_QUANTITY\r\n"
-                        + "        FROM (\r\n"
-                        + "                SELECT OD_UserID, OD_VarietyID, Age, Quantity\r\n"
-                        + "                FROM (\r\n"
-                        + "                        SELECT OD.OD_USERID, OD.OD_VarietyID, AGE, OD.Quantity\r\n"
-                        + "                        FROM \"ORDER\" OD\r\n"
-                        + "                        INNER JOIN \"USER\" U ON OD.OD_UserID = U.UserID\r\n"
-                        + "                     )\r\n"
-                        + "                WHERE Age < 20\r\n"
-                        + "             )\r\n"
-                        + "        GROUP BY OD_VarietyID\r\n"
-                        + "        ORDER BY COUNT(OD_VarietyID) DESC\r\n"
-                        + "    )\r\n"
-                        + "WHERE ROWNUM < 6";
+                  		+ "DENSE_RANK() OVER (ORDER BY VARIETYCOUNT DESC, Total_QUANTITY DESC) ORDER_COUNT, TEEN_SEEDNAME AS SEEDNAME, TEEN_VARIETYNAME AS VARIETYNAME\r\n"
+                  		+ "FROM(\r\n"
+                  		+ "     SELECT VarietyName AS TEEN_VARIETYNAME, SeedName AS TEEN_SEEDNAME, COUNT(*) AS VARIETYCOUNT, SUM(Quantity) AS Total_QUANTITY\r\n"
+                  		+ "     FROM (\r\n"
+                  		+ "           SELECT OD_UserID, OD_VarietyID, Age, Quantity, SeedName, VarietyName\r\n"
+                  		+ "           FROM (\r\n"
+                  		+ "                 SELECT OD.OD_USERID, OD.OD_VarietyID, AGE, OD.Quantity, S.SeedName, S.VarietyName\r\n"
+                  		+ "                 FROM \"USER\" U\r\n"
+                  		+ "                 INNER JOIN \"ORDER\" OD ON U.UserID = OD.OD_UserID\r\n"
+                  		+ "                 FULL OUTER JOIN SEED S ON OD.OD_VarietyID = S.VarietyID)\r\n"
+                  		+ "           WHERE Age < 20)\r\n"
+                  		+ "     GROUP BY OD_VarietyID, VarietyName, SeedName\r\n"
+                  		+ "     ORDER BY COUNT(OD_VarietyID) DESC)";
                   ResultSet rs = stmt.executeQuery(sql);
-                  System.out.println("씨앗 이름");
-                  System.out.println("------------------------------------");
+                  System.out.println("순위 |   씨앗 이름   |  품종 이름");
+                  System.out.println("-----------------------------------");
                   while (rs.next()) {
                      String OrderCount = rs.getString(1);
-                     VarietyID = rs.getString(2);
-                     
+                     SeedName = rs.getString(2);
+                     VarietyName = rs.getString(3);
+                     System.out.println(OrderCount + " | " + SeedName + " | " + VarietyName);
                   }
                }catch(SQLException ex2) {
                   System.err.println("sql error = " + ex2.getMessage());
                   System.exit(1);
                }
+               topOrdering(conn, stmt);
+               ordering(conn, stmt);
             }
-            else if (ageMenu.equalsIgnoreCase("2")) {
-               System.out.println("\r\n'[2] 청년 인기순위 검색하기'를 선택하셨습니다!\r\n");
-               try {
+            else if (ageMenu == 2) {
+              System.out.println("\r\n'[2] 청년 인기순위 검색하기'를 선택하셨습니다!\r\n");
+              try {
+             	 // 품종 번호 출력
                   String sql = "SELECT\r\n"
-                        + "    DENSE_RANK() OVER (ORDER BY VARIETYCOUNT DESC, Total_QUANTITY DESC) ORDER_COUNT, TEEN_VARIETYNAME AS VARIETY_NAME\r\n"
-                        + "FROM\r\n"
-                        + "    (\r\n"
-                        + "        SELECT OD_VarietyID AS TEEN_VARIETYNAME, COUNT(*) AS VARIETYCOUNT, SUM(Quantity) AS Total_QUANTITY\r\n"
-                        + "        FROM (\r\n"
-                        + "                SELECT OD_UserID, OD_VarietyID, Age, Quantity\r\n"
-                        + "                FROM (\r\n"
-                        + "                        SELECT OD.OD_USERID, OD.OD_VarietyID, AGE, OD.Quantity\r\n"
-                        + "                        FROM \"ORDER\" OD\r\n"
-                        + "                        INNER JOIN \"USER\" U ON OD.OD_UserID = U.UserID\r\n"
-                        + "                     )\r\n"
-                        + "                WHERE 20 <= Age AND AGE < 31\r\n"
-                        + "             )\r\n"
-                        + "        GROUP BY OD_VarietyID\r\n"
-                        + "        ORDER BY COUNT(OD_VarietyID) DESC\r\n"
-                        + "    )\r\n"
-                        + "WHERE ROWNUM < 6";
+                  		+ "DENSE_RANK() OVER (ORDER BY VARIETYCOUNT DESC, Total_QUANTITY DESC) ORDER_COUNT, TEEN_SEEDNAME AS SEEDNAME, TEEN_VARIETYNAME AS VARIETYNAME\r\n"
+                  		+ "FROM(\r\n"
+                  		+ "     SELECT VarietyName AS TEEN_VARIETYNAME, SeedName AS TEEN_SEEDNAME, COUNT(*) AS VARIETYCOUNT, SUM(Quantity) AS Total_QUANTITY\r\n"
+                  		+ "     FROM (\r\n"
+                  		+ "           SELECT OD_UserID, OD_VarietyID, Age, Quantity, SeedName, VarietyName\r\n"
+                  		+ "           FROM (\r\n"
+                  		+ "                 SELECT OD.OD_USERID, OD.OD_VarietyID, AGE, OD.Quantity, S.SeedName, S.VarietyName\r\n"
+                  		+ "                 FROM \"USER\" U\r\n"
+                  		+ "                 INNER JOIN \"ORDER\" OD ON U.UserID = OD.OD_UserID\r\n"
+                  		+ "                 FULL OUTER JOIN SEED S ON OD.OD_VarietyID = S.VarietyID)\r\n"
+                  		+ "           WHERE 20 <= Age AND AGE < 31)\r\n"
+                  		+ "     GROUP BY OD_VarietyID, VarietyName, SeedName\r\n"
+                  		+ "     ORDER BY COUNT(OD_VarietyID) DESC)";
                   ResultSet rs = stmt.executeQuery(sql);
-                  System.out.println("씨앗 이름");
-                  System.out.println("------------------------------------");
+                  System.out.println("순위 |   씨앗 이름   |  품종 이름");
+                  System.out.println("-----------------------------------");
                   while (rs.next()) {
                      String OrderCount = rs.getString(1);
-                     VarietyID = rs.getString(2);
-                                             }
+                     SeedName = rs.getString(2);
+                     VarietyName = rs.getString(3);
+                     System.out.println(OrderCount + " | " + SeedName + " | " + VarietyName);
+                  }
                }catch(SQLException ex2) {
                   System.err.println("sql error = " + ex2.getMessage());
                   System.exit(1);
                }
+               topOrdering(conn, stmt);
+               ordering(conn, stmt);
             }
-            else if (ageMenu.equalsIgnoreCase("3")) {
+            else if (ageMenu == 3) {
                System.out.println("\r\n'[3] 중년 인기순위 검색하기'를 선택하셨습니다!\r\n");
                try {
+              	  // 품종 번호 출력
                   String sql = "SELECT\r\n"
-                        + "    DENSE_RANK() OVER (ORDER BY VARIETYCOUNT DESC, Total_QUANTITY DESC) ORDER_COUNT, TEEN_VARIETYNAME AS VARIETY_NAME\r\n"
-                        + "FROM\r\n"
-                        + "    (\r\n"
-                        + "        SELECT OD_VarietyID AS TEEN_VARIETYNAME, COUNT(*) AS VARIETYCOUNT, SUM(Quantity) AS Total_QUANTITY\r\n"
-                        + "        FROM (\r\n"
-                        + "                SELECT OD_UserID, OD_VarietyID, Age, Quantity\r\n"
-                        + "                FROM (\r\n"
-                        + "                        SELECT OD.OD_USERID, OD.OD_VarietyID, AGE, OD.Quantity\r\n"
-                        + "                        FROM \"ORDER\" OD\r\n"
-                        + "                        INNER JOIN \"USER\" U ON OD.OD_UserID = U.UserID\r\n"
-                        + "                     )\r\n"
-                        + "                WHERE 31 <= AGE AND AGE < 51\r\n"
-                        + "             )\r\n"
-                        + "        GROUP BY OD_VarietyID\r\n"
-                        + "        ORDER BY COUNT(OD_VarietyID) DESC\r\n"
-                        + "    )\r\n"
-                        + "WHERE ROWNUM < 6";
-                  ResultSet rs = stmt.executeQuery(sql);
-                  System.out.println("씨앗 이름");
-                  System.out.println("------------------------------------");
-                  while (rs.next()) {
-                     String OrderCount = rs.getString(1);
-                     VarietyID = rs.getString(2);
-                  }
+                   		+ "DENSE_RANK() OVER (ORDER BY VARIETYCOUNT DESC, Total_QUANTITY DESC) ORDER_COUNT, TEEN_SEEDNAME AS SEEDNAME, TEEN_VARIETYNAME AS VARIETYNAME\r\n"
+                   		+ "FROM(\r\n"
+                   		+ "     SELECT VarietyName AS TEEN_VARIETYNAME, SeedName AS TEEN_SEEDNAME, COUNT(*) AS VARIETYCOUNT, SUM(Quantity) AS Total_QUANTITY\r\n"
+                   		+ "     FROM (\r\n"
+                   		+ "           SELECT OD_UserID, OD_VarietyID, Age, Quantity, SeedName, VarietyName\r\n"
+                   		+ "           FROM (\r\n"
+                   		+ "                 SELECT OD.OD_USERID, OD.OD_VarietyID, AGE, OD.Quantity, S.SeedName, S.VarietyName\r\n"
+                   		+ "                 FROM \"USER\" U\r\n"
+                   		+ "                 INNER JOIN \"ORDER\" OD ON U.UserID = OD.OD_UserID\r\n"
+                   		+ "                 FULL OUTER JOIN SEED S ON OD.OD_VarietyID = S.VarietyID)\r\n"
+                   		+ "           WHERE 31 <= Age AND AGE < 51)\r\n"
+                   		+ "     GROUP BY OD_VarietyID, VarietyName, SeedName\r\n"
+                   		+ "     ORDER BY COUNT(OD_VarietyID) DESC)";
+                   ResultSet rs = stmt.executeQuery(sql);
+                   System.out.println("순위 |   씨앗 이름   |  품종 이름");
+                   System.out.println("-----------------------------------");
+                   while (rs.next()) {
+                      String OrderCount = rs.getString(1);
+                      SeedName = rs.getString(2);
+                      VarietyName = rs.getString(3);
+                      System.out.println(OrderCount + " | " + SeedName + " | " + VarietyName);
+                   }
                }catch(SQLException ex2) {
-                  System.err.println("sql error = " + ex2.getMessage());
-                  System.exit(1);
+                   System.err.println("sql error = " + ex2.getMessage());
+                   System.exit(1);
                }
+               topOrdering(conn, stmt);
+               ordering(conn, stmt);
             }
-            else if (ageMenu.equalsIgnoreCase("4")) {
+            else if (ageMenu == 4) {
                System.out.println("\r\n'[4] 장년 인기순위 검색하기'를 선택하셨습니다!\r\n");
                try {
-                  String sql = "SELECT\r\n"
-                        + "    DENSE_RANK() OVER (ORDER BY VARIETYCOUNT DESC, Total_QUANTITY DESC) ORDER_COUNT, TEEN_VARIETYNAME AS VARIETY_NAME\r\n"
-                        + "FROM\r\n"
-                        + "    (\r\n"
-                        + "        SELECT OD_VarietyID AS TEEN_VARIETYNAME, COUNT(*) AS VARIETYCOUNT, SUM(Quantity) AS Total_QUANTITY\r\n"
-                        + "        FROM (\r\n"
-                        + "                SELECT OD_UserID, OD_VarietyID, Age, Quantity\r\n"
-                        + "                FROM (\r\n"
-                        + "                        SELECT OD.OD_USERID, OD.OD_VarietyID, AGE, OD.Quantity\r\n"
-                        + "                        FROM \"ORDER\" OD\r\n"
-                        + "                        INNER JOIN \"USER\" U ON OD.OD_UserID = U.UserID\r\n"
-                        + "                     )\r\n"
-                        + "                WHERE 51 <= Age\r\n"
-                        + "             )\r\n"
-                        + "        GROUP BY OD_VarietyID\r\n"
-                        + "        ORDER BY COUNT(OD_VarietyID) DESC\r\n"
-                        + "    )\r\n"
-                        + "WHERE ROWNUM < 6";
-                  ResultSet rs = stmt.executeQuery(sql);
-                  System.out.println("씨앗 이름");
-                  System.out.println("------------------------------------");
-                  while (rs.next()) {
-                     String OrderCount = rs.getString(1);
-                     VarietyID = rs.getString(2);
-                  }
-               }catch(SQLException ex2) {
-                  System.err.println("sql error = " + ex2.getMessage());
-                  System.exit(1);
-               }
+              	  // 품종 번호 출력
+                    String sql = "SELECT\r\n"
+                    		+ "DENSE_RANK() OVER (ORDER BY VARIETYCOUNT DESC, Total_QUANTITY DESC) ORDER_COUNT, TEEN_SEEDNAME AS SEEDNAME, TEEN_VARIETYNAME AS VARIETYNAME\r\n"
+                    		+ "FROM(\r\n"
+                    		+ "     SELECT VarietyName AS TEEN_VARIETYNAME, SeedName AS TEEN_SEEDNAME, COUNT(*) AS VARIETYCOUNT, SUM(Quantity) AS Total_QUANTITY\r\n"
+                    		+ "     FROM (\r\n"
+                    		+ "           SELECT OD_UserID, OD_VarietyID, Age, Quantity, SeedName, VarietyName\r\n"
+                    		+ "           FROM (\r\n"
+                    		+ "                 SELECT OD.OD_USERID, OD.OD_VarietyID, AGE, OD.Quantity, S.SeedName, S.VarietyName\r\n"
+                    		+ "                 FROM \"USER\" U\r\n"
+                    		+ "                 INNER JOIN \"ORDER\" OD ON U.UserID = OD.OD_UserID\r\n"
+                    		+ "                 FULL OUTER JOIN SEED S ON OD.OD_VarietyID = S.VarietyID)\r\n"
+                    		+ "           WHERE 51 <= Age)\r\n"
+                    		+ "     GROUP BY OD_VarietyID, VarietyName, SeedName\r\n"
+                    		+ "     ORDER BY COUNT(OD_VarietyID) DESC)";
+                    ResultSet rs = stmt.executeQuery(sql);
+                    System.out.println("순위 |   씨앗 이름   |  품종 이름");
+                    System.out.println("-----------------------------------");
+                    while (rs.next()) {
+                       String OrderCount = rs.getString(1);
+                       SeedName = rs.getString(2);
+                       VarietyName = rs.getString(3);
+                       System.out.println(OrderCount + " | " + SeedName + " | " + VarietyName);
+                    }
+                }catch(SQLException ex2) {
+                    System.err.println("sql error = " + ex2.getMessage());
+                    System.exit(1);
+                }
+               	topOrdering(conn, stmt);
+                ordering(conn, stmt);
             }
          }
-         /*
-         else if (topMenu.equalsIgnoreCase("2")) {
-            System.out.println("\r\n'[2] 기간별 인기순위'를 선택하셨습니다!\r\n");
-            System.out.println("[1] 오늘  [2] 일주일  [3] 한달  [4] 1년  [ESC] 뒤로 가기  [HOME] 홈으로 가기\r\n");
          
-         }
-         else if (topMenu.equalsIgnoreCase("ESC")) {
-            break;
-         }
-         else if (topMenu.equalsIgnoreCase("HOME")) {
-            home();
-         }
-         */
-      }            
+         else if (topMenu == 2) {
+            System.out.println("\r\n'[2] 기간별 인기순위'를 선택하셨습니다!\r\n");
+            System.out.println("	[1] 오늘  [2] 일주일  [3] 한달  [4] 1년");
+            int periodMenu = keyboard.nextInt();
+            
+            if (periodMenu == 1) {
+            	System.out.println("'[1]오늘 인기순위 검색하기'를 선택하셨습니다!\r\n");
+            	try {
+            		String sql = "SELECT\r\n"
+            				+ "DENSE_RANK() OVER (ORDER BY VARIETYCOUNT DESC, Total_QUANTITY DESC) ORDER_COUNT, TEEN_SEEDNAME AS SEEDNAME, TEEN_VARIETYNAME AS VARIETYNAME\r\n"
+            				+ "FROM(\r\n"
+            				+ "     SELECT VarietyName AS TEEN_VARIETYNAME, SeedName AS TEEN_SEEDNAME, COUNT(*) AS VARIETYCOUNT, SUM(Quantity) AS Total_QUANTITY\r\n"
+            				+ "     FROM (\r\n"
+            				+ "           SELECT OD_VarietyID, Purchase_Date, SeedName, VarietyName, Quantity\r\n"
+            				+ "           FROM (\r\n"
+            				+ "                 SELECT OD.OD_VarietyID, OD.Purchase_Date, S.SeedName, S.VarietyName, OD.Quantity\r\n"
+            				+ "                 FROM \"ORDER\" OD FULL OUTER JOIN \"SEED\" S ON OD.OD_VarietyID = S.VarietyID)\r\n"
+            				+ "           WHERE Purchase_date BETWEEN TRUNC(SYSDATE) AND TRUNC(SYSDATE) + 1)\r\n"
+            				+ "     GROUP BY OD_VarietyID, VarietyName, SeedName\r\n"
+            				+ "     ORDER BY COUNT(OD_VarietyID) DESC)";
+            		ResultSet rs = stmt.executeQuery(sql);
+                    System.out.println("순위 |   씨앗 이름   |  품종 이름");
+                    System.out.println("-----------------------------------");
+                    while (rs.next()) {
+                       String OrderCount = rs.getString(1);
+                       SeedName = rs.getString(2);
+                       VarietyName = rs.getString(3);
+                       System.out.println(OrderCount + " | " + SeedName + " | " + VarietyName);
+                    }
+            		
+            	}catch(SQLException ex2) {
+            		System.out.println("sql error = " + ex2.getMessage());
+            		System.exit(1);
+            	}
+            	topOrdering(conn, stmt);
+            	ordering(conn, stmt);
+            }
+            
+            else if (periodMenu == 2) {
+            	System.out.println("'[2]일주일 인기순위 검색하기'를 선택하셨습니다!\r\n");
+            	try {
+            		String sql = "SELECT\r\n"
+            				+ "DENSE_RANK() OVER (ORDER BY VARIETYCOUNT DESC, Total_QUANTITY DESC) ORDER_COUNT, TEEN_SEEDNAME AS SEEDNAME, TEEN_VARIETYNAME AS VARIETYNAME\r\n"
+            				+ "FROM(\r\n"
+            				+ "     SELECT VarietyName AS TEEN_VARIETYNAME, SeedName AS TEEN_SEEDNAME, COUNT(*) AS VARIETYCOUNT, SUM(Quantity) AS Total_QUANTITY\r\n"
+            				+ "     FROM (\r\n"
+            				+ "           SELECT OD_VarietyID, Purchase_Date, SeedName, VarietyName, Quantity\r\n"
+            				+ "           FROM (\r\n"
+            				+ "                 SELECT OD.OD_VarietyID, OD.Purchase_Date, S.SeedName, S.VarietyName, OD.Quantity\r\n"
+            				+ "                 FROM \"ORDER\" OD FULL OUTER JOIN \"SEED\" S ON OD.OD_VarietyID = S.VarietyID)\r\n"
+            				+ "           WHERE Purchase_Date BETWEEN TRUNC(SYSDATE) - 7 AND TRUNC(SYSDATE))\r\n"
+            				+ "     GROUP BY OD_VarietyID, VarietyName, SeedName\r\n"
+            				+ "     ORDER BY COUNT(OD_VarietyID) DESC)";
+            		ResultSet rs = stmt.executeQuery(sql);
+                    System.out.println("순위 |   씨앗 이름   |  품종 이름");
+                    System.out.println("-----------------------------------");
+                    while (rs.next()) {
+                       String OrderCount = rs.getString(1);
+                       SeedName = rs.getString(2);
+                       VarietyName = rs.getString(3);
+                       System.out.println(OrderCount + " | " + SeedName + " | " + VarietyName);
+                    }
+            		
+            	}catch(SQLException ex2) {
+            		System.out.println("sql error = " + ex2.getMessage());
+            		System.exit(1);
+            	}
+            	topOrdering(conn, stmt);
+            	ordering(conn, stmt);
+            }
+            
+            else if (periodMenu == 3) {
+            	System.out.println("'[3]한달 인기순위 검색하기'를 선택하셨습니다!\r\n");
+            	try {
+            		String sql = "SELECT\r\n"
+            				+ "DENSE_RANK() OVER (ORDER BY VARIETYCOUNT DESC, Total_QUANTITY DESC) ORDER_COUNT, TEEN_SEEDNAME AS SEEDNAME, TEEN_VARIETYNAME AS VARIETYNAME\r\n"
+            				+ "FROM(\r\n"
+            				+ "     SELECT VarietyName AS TEEN_VARIETYNAME, SeedName AS TEEN_SEEDNAME, COUNT(*) AS VARIETYCOUNT, SUM(Quantity) AS Total_QUANTITY\r\n"
+            				+ "     FROM (\r\n"
+            				+ "           SELECT OD_VarietyID, Purchase_Date, SeedName, VarietyName, Quantity\r\n"
+            				+ "           FROM (\r\n"
+            				+ "                 SELECT OD.OD_VarietyID, OD.Purchase_Date, S.SeedName, S.VarietyName, OD.Quantity\r\n"
+            				+ "                 FROM \"ORDER\" OD FULL OUTER JOIN \"SEED\" S ON OD.OD_VarietyID = S.VarietyID)\r\n"
+            				+ "           WHERE Purchase_Date BETWEEN TRUNC(SYSDATE) - 30 AND TRUNC(SYSDATE))\r\n"
+            				+ "     GROUP BY OD_VarietyID, VarietyName, SeedName\r\n"
+            				+ "     ORDER BY COUNT(OD_VarietyID) DESC)";
+            		ResultSet rs = stmt.executeQuery(sql);
+                    System.out.println("순위 |   씨앗 이름   |  품종 이름");
+                    System.out.println("-----------------------------------");
+                    while (rs.next()) {
+                       String OrderCount = rs.getString(1);
+                       SeedName = rs.getString(2);
+                       VarietyName = rs.getString(3);
+                       System.out.println(OrderCount + " | " + SeedName + " | " + VarietyName);
+                    }
+            		
+            	}catch(SQLException ex2) {
+            		System.out.println("sql error = " + ex2.getMessage());
+            		System.exit(1);
+            	}
+            	topOrdering(conn, stmt);
+            	ordering(conn, stmt);
+            }
+            
+            else if (periodMenu == 4) {
+            	System.out.println("'[4]1년 인기순위 검색하기'를 선택하셨습니다!\r\n");
+            	try {
+            		String sql = "SELECT\r\n"
+            				+ "DENSE_RANK() OVER (ORDER BY VARIETYCOUNT DESC, Total_QUANTITY DESC) ORDER_COUNT, TEEN_SEEDNAME AS SEEDNAME, TEEN_VARIETYNAME AS VARIETYNAME\r\n"
+            				+ "FROM(\r\n"
+            				+ "     SELECT VarietyName AS TEEN_VARIETYNAME, SeedName AS TEEN_SEEDNAME, COUNT(*) AS VARIETYCOUNT, SUM(Quantity) AS Total_QUANTITY\r\n"
+            				+ "     FROM (\r\n"
+            				+ "           SELECT OD_VarietyID, Purchase_Date, SeedName, VarietyName, Quantity\r\n"
+            				+ "           FROM (\r\n"
+            				+ "                 SELECT OD.OD_VarietyID, OD.Purchase_Date, S.SeedName, S.VarietyName, OD.Quantity\r\n"
+            				+ "                 FROM \"ORDER\" OD FULL OUTER JOIN \"SEED\" S ON OD.OD_VarietyID = S.VarietyID)\r\n"
+            				+ "           WHERE Purchase_Date BETWEEN TRUNC(SYSDATE) - 365 AND TRUNC(SYSDATE))\r\n"
+            				+ "     GROUP BY OD_VarietyID, VarietyName, SeedName\r\n"
+            				+ "     ORDER BY COUNT(OD_VarietyID) DESC)";
+            		ResultSet rs = stmt.executeQuery(sql);
+                    System.out.println("순위 |   씨앗 이름   |  품종 이름");
+                    System.out.println("-----------------------------------");
+                    while (rs.next()) {
+                       String OrderCount = rs.getString(1);
+                       SeedName = rs.getString(2);
+                       VarietyName = rs.getString(3);
+                       System.out.println(OrderCount + " | " + SeedName + " | " + VarietyName);
+                    }
+            		
+            	}catch(SQLException ex2) {
+            		System.out.println("sql error = " + ex2.getMessage());
+            		System.exit(1);
+            	}
+            	topOrdering(conn, stmt);
+            	ordering(conn, stmt);
+            }
+      	}
+      }
    }
    
    
@@ -876,50 +1045,45 @@ public class Team7_SEEDB_JDBCC {
       System.out.println("welcome");
    }
    
-   public static void ordering(Connection conn, Statement stmt) {
-	  int OrgCnt = 0;
-	  String inputSeedName = "";
-	  String inputVarietyName = "";
-      // 품종 목록 출력
-	  while (true)
-	  {
-		  // 씨앗 품종 목록이랑 보유기관 출력
-		  System.out.println("\r\n<< 구매/대여 하실 씨앗의 이름을 알려주세요 >>");
-		  inputSeedName = keyboard.next();
-		  
-		  try {
-			  String sql = "SELECT S.VarietyName, ORG.OrgName, ORG.Org_Purpose \r\n"
-					  + "FROM \"SEED\" S FULL OUTER JOIN HAS H ON S.VarietyID = H.VarietyID FULL OUTER JOIN ORGANIZATION ORG ON H.OrgName = ORG.OrgName \r\n"
-					  + "WHERE S.SeedName LIKE '" + inputSeedName + "'";
-			  ResultSet rs = stmt.executeQuery(sql);
-			  System.out.println("<< 검색하신 씨앗의 품종 그 씨앗을 보유하고 있는 기관의 목록입니다 >>");
-			  System.out.println("Selected SEEDNAME: " + inputSeedName);
-			  System.out.println("VARIETYNAME | ORGANIZATION NAME               | PURPOSE");
-			  System.out.println("--------------------------------------------------------");
-         
-			  while (rs.next()) {
-				  String outputVarietyName = rs.getString(1);
-				  String outputOrgName = rs.getString(2);
-				  String outputOrgPurpose = rs.getString(3);
-				  if (outputOrgName != null)
-					  OrgCnt++;
-				  if (OrgCnt > 0)
-					  System.out.printf("%10s | %30s | %s\n", outputVarietyName, outputOrgName, outputOrgPurpose);
-			  }
-			  if (OrgCnt != 0)
-				  break;
-			  System.out.println("죄송합니다. 그 씨앗을 보유한 기관이 없습니다. 다른 씨앗 및 품종을 다시 검색해주세요.");
-		  }catch(SQLException ex2) {
-			  System.err.println("sql error = " + ex2.getMessage());
-			  System.exit(1);
+   public static void topOrdering(Connection conn, Statement stmt) {
+	   String inputSeedName = "";
+
+	   // 씨앗 품종 목록이랑 보유기관 출력
+	   System.out.println("\r\n<< 구매/대여 하실 씨앗의 이름을 알려주세요 >>");
+	   inputSeedName = keyboard.next();
+			  
+	   try {
+		  String sql = "SELECT S.VarietyName, ORG.OrgName, ORG.Org_Purpose \r\n"
+				  + "FROM \"SEED\" S INNER JOIN HAS H ON S.VarietyID = H.VarietyID INNER JOIN ORGANIZATION ORG ON H.OrgName = ORG.OrgName \r\n"
+				  + "WHERE S.SeedName LIKE '" + inputSeedName + "'";
+		  ResultSet rs = stmt.executeQuery(sql);
+		  System.out.println("<< 검색하신 씨앗의 품종과 그 씨앗을 보유하고 있는 기관의 목록입니다 >>");
+		  System.out.println("Selected SEEDNAME: " + inputSeedName);
+		  System.out.println("VARIETYNAME | ORGANIZATION NAME               | PURPOSE");
+		  System.out.println("--------------------------------------------------------");
+	         
+		  while (rs.next()) {
+			  String outputVarietyName = rs.getString(1);
+			  String outputOrgName = rs.getString(2);
+			  String outputOrgPurpose = rs.getString(3);
+			  System.out.println(outputVarietyName + " | " + outputOrgName + " | " + outputOrgPurpose);
 		  }
+	  }catch(SQLException ex2) {
+		  System.err.println("sql error = " + ex2.getMessage());
+		  System.exit(1);
 	  }
-         
-      // 기관 선택 후 수량 선택(자동으로 구매/대여 결정)
-      System.out.println("\r\n<< 어느 기관의 씨앗을 구매/대여 하겠습니까? >>");
-      String inputOrgName = keyboard.next();
+   }
+   
+   public static void ordering(Connection conn, Statement stmt) {
+	   System.out.println("\r\n구매 및 대여를 원하는 씨앗의 이름, 품종, 기관을 선택해주세요.");
+	   System.out.println("(공백으로만 구분하여 값을 입력해주세요!)");
+       String inputSeedName = keyboard.next();
+       String inputVarietyName = keyboard.next();
+       String inputOrgName = keyboard.next();
+
       String inputOrgPurpose = "";
       String PurposeKOR = "";
+      int inputQuantity = 0;
       // 목적 자동 입력
       try {
          String sql = "SELECT Org_Purpose \r\n"
@@ -930,17 +1094,27 @@ public class Team7_SEEDB_JDBCC {
          while (rs.next()) {
             inputOrgPurpose = rs.getString(1);
          }
-         if (inputOrgPurpose.equalsIgnoreCase("R"))
+         if (inputOrgPurpose.equalsIgnoreCase("L"))
             PurposeKOR = "대여";
-         else
+         else if (inputOrgPurpose.equalsIgnoreCase("S"))
             PurposeKOR = "구매";
+         else if (inputOrgPurpose.equalsIgnoreCase("A")) {
+        	System.out.println("이 기관은 구매와 대여 모두가 가능한 기관입니다. 구매를 원하시면 '구매'를, 대여를 원하시면 '대여'를 입력해주세요.");
+        	PurposeKOR = keyboard.next();
+         }
       }catch(SQLException ex2) {
          System.err.println("sql error = " + ex2.getMessage());
          System.exit(1);
       }
-      System.out.println("\r\n<< 얼마나 많은 양의 씨앗을 구매/대여 할지 입력해주세요. (단위는 g입니다!) >>");
-      int inputQuantity = keyboard.nextInt();
-      keyboard.nextLine();
+      if (PurposeKOR.equalsIgnoreCase("대여")) {
+    	  System.out.println("대여는 한 번에 5g씩 가능하므로 대여하시는 양은 자동 입력되었습니다.");
+    	  inputQuantity = 5;
+      }
+      else {
+    	  System.out.println("\r\n<< 얼마나 많은 양의 씨앗을 구매/대여 할지 입력해주세요. (단위는 g입니다!) >>");
+    	  inputQuantity = keyboard.nextInt();
+    	  keyboard.nextLine();
+      }
       
       // 주문 내역 확인
       System.out.println("\r\n<< 주문 내역을 확인해주시고, 맞으면 YES, 틀리면 NO를 입력해 주세요 >>");
@@ -951,11 +1125,11 @@ public class Team7_SEEDB_JDBCC {
     	  /*---------------------------------------------*/
     	 // 로그인 클래스 만들어지면 INSERT부분 수정하겠습니다
     	  /*---------------------------------------------*/
-         System.out.print("유저 아이디: ");
+         System.out.print("\r\n유저 아이디: ");
          String UserID = keyboard.next();
+         String outputVarietyID = "id";
          try {
-               // VarietyID 구하기
-               String outputVarietyID = "id";
+               // VarietyID 구하기 
                String sql = "SELECT S.VarietyID \r\n"
                      + "FROM \"SEED\" S FULL OUTER JOIN HAS H ON S.VarietyID = H.VarietyID \r\n"
                      + "WHERE S.SeedName LIKE '" + inputSeedName + "' \r\n"
@@ -964,11 +1138,20 @@ public class Team7_SEEDB_JDBCC {
                ResultSet rs = stmt.executeQuery(sql);
                while (rs.next()) {
                   outputVarietyID = rs.getString(1);
-                  System.out.println(outputVarietyID);
                }
-               sql = "INSERT INTO \"ORDER\" VALUES (ORDER_SEQ.NEXTVAL, '" + UserID + "', TO_CHAR(SYSDATE, 'YYYY.MM.DD HH24:MI'), '" + inputOrgPurpose + "', '" + inputOrgName + "', '" + outputVarietyID + "', " + inputQuantity + ")";
+         }catch(SQLException ex2) {
+             System.err.println("sql error = " + ex2.getMessage());
+             System.exit(1);
+         }
+         
+         if (PurposeKOR.equalsIgnoreCase("구매"))
+        	 inputOrgPurpose = "B";
+         else if (PurposeKOR.equalsIgnoreCase("대여"))
+        	 inputOrgPurpose = "R";
+         try {
+               String sql = "INSERT INTO \"ORDER\" VALUES (ORDER_SEQ.NEXTVAL, '" + UserID + "', TO_CHAR(SYSDATE, 'YYYY.MM.DD HH24:MI'), '" + inputOrgPurpose + "', '" + inputOrgName + "', '" + outputVarietyID + "', " + inputQuantity + ")";
                System.out.println(sql);
-               rs = stmt.executeQuery(sql);
+               ResultSet rs = stmt.executeQuery(sql);
                System.out.println("\r\n<< 주문이 완료되었습니다. >>");
                conn.commit();
          }catch(SQLException ex2) {
@@ -976,29 +1159,52 @@ public class Team7_SEEDB_JDBCC {
             System.exit(1);
          }
       }
+      else if (answer.equalsIgnoreCase("NO")) {
+    	  System.out.println("메뉴 선택 페이지로 돌아갑니다.");
+      }
+   }
+   
+   // 관리자 주문 목록 첫 페이지_사용자 검색/기관 검색
+   public static void manOrderList(Connection conn, Statement stmt) {
+	   while (true) {
+		   System.out.println("[1] 사용자 주문 목록 검색  [2] 기관 주문 목록 검색");
+		   int opt = keyboard.nextInt();
+		   if (opt == 1) {
+			   myOrderList(conn, stmt);
+			   break;
+		   }
+		   else if (opt == 2) {
+			   OrgOrderList(conn, stmt);
+			   break;
+		   }
+		   else
+			   System.out.println("잘못된 옵션을 선택하셨습니다. 다시 선택해주세요.");
+	   }	   
    }
    
    
+   // 사용자와 관리자가 사용할 주문 목록 출력 함수_아이디로 주문 목록 검색
    public static void myOrderList(Connection conn, Statement stmt) {
-      System.out.println("<< 주문 목록 출력을 위해 본인의 아이디를 입력해주세요 >>");
+      System.out.println("<< 주문 목록 출력을 위해 아이디를 입력해주세요 >>");
       System.out.print("ID: ");
       String UserID = keyboard.next();
       try {
          // VarietyID 구하기
-         String sql = "SELECT OrderNum, Purchase_Date, Order_Purpose, OD_OrgName, OD_VarietyID, Quantity \r\n"
-               + "FROM \"ORDER\" \r\n"
-               + "WHERE OD_UserID LIKE '" + UserID + "' \r\n";
+         String sql = "SELECT OrderNum, Purchase_Date, SeedName, VarietyName, Quantity, OD_OrgName, Order_Purpose\r\n"
+         		+ "FROM \"ORDER\" INNER JOIN \"SEED\" ON OD_VarietyID = VarietyID\r\n"
+         		+ "WHERE OD_UserID LIKE '" + UserID + "'";
          ResultSet rs = stmt.executeQuery(sql);
          System.out.println(UserID + "의 주문 내역");
-         System.out.println("------------------------------------------");
+         System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
          while (rs.next()) {
             String outputOrderNum = rs.getString(1);
             String outputPurchaseDate = rs.getString(2);
-            String outputOrderPurpose = rs.getString(3);
-            String outputOrgName = rs.getString(4);
-            String outputVarietyID = rs.getString(5);
-            String outputQuantity = rs.getString(6);
-            System.out.println("주문번호: " + outputOrderNum + " | 주문날짜: " + outputPurchaseDate + " | 주문 목적: " + outputOrderPurpose + " | 주문 기관: " + outputOrgName + " | 품종 번호: " +outputVarietyID + " | 주문량(g) : " + outputQuantity);
+            String outputSeedName = rs.getString(3);
+            String outputVarietyName = rs.getString(4);
+            String outputQuantity = rs.getString(5);
+            String outputOrgName = rs.getString(6);
+            String outputOrderPurpose = rs.getString(7);
+            System.out.println("주문번호: " + outputOrderNum + " | 주문날짜: " + outputPurchaseDate + " | 주문한 씨앗 이름: " + outputSeedName + " | 주문한 품종 이름 : " + outputVarietyName + " | 주문량(g) : " + outputQuantity + " | 주문 기관: " + outputOrgName + " | 주문 목적: " + outputOrderPurpose);
          }
 
       }catch(SQLException ex2) {
@@ -1006,6 +1212,36 @@ public class Team7_SEEDB_JDBCC {
       System.exit(1);
       }
    }
+   
+   // 기관과 관리자가 사용할 주문 목록 출력 함수_기관 이름으로 주문 목록 검색
+   public static void OrgOrderList(Connection conn, Statement stmt) {
+	   System.out.println("<< 주문 목록 출력을 위해 기관명을 입력해주세요 >>");
+	   System.out.print("OrgName: ");
+	   String OrgName = keyboard.next();
+	   try {
+	      // VarietyID 구하기
+	      String sql = "SELECT OrderNum, OD_UserID, Purchase_Date, SeedName, VarietyName, Quantity\r\n"
+	      		+ "FROM \"ORDER\" INNER JOIN \"SEED\" ON OD_VarietyID = VarietyID\r\n"
+	      		+ "WHERE OD_OrgName LIKE '" + OrgName + "'";
+	      ResultSet rs = stmt.executeQuery(sql);
+	      System.out.println("기관" + OrgName + "의 주문서 내역");
+	      System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+	      while (rs.next()) {
+	         String outputOrderNum = rs.getString(1);
+	         String outputUserID = rs.getString(2);
+	         String outputPurchaseDate = rs.getString(3);
+	         String outputSeedName = rs.getString(4);
+	         String outputVarietyName = rs.getString(5);
+	         String outputQuantity = rs.getString(6);
+	         System.out.println("주문번호: " + outputOrderNum + "주문한 유저 아이디: " + outputUserID + " | 주문날짜: " + outputPurchaseDate + " | 주문한 씨앗 이름: " + outputSeedName + " | 주문한 품종 이름 : " + outputVarietyName + " | 주문량(g) : " + outputQuantity);
+		     System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+	      }
+       } catch(SQLException ex2) {
+    	   System.err.println("sql error = " + ex2.getMessage());
+    	   System.exit(1);
+       }
+   }
+   
    
    public static void BBwrite(Connection conn, Statement stmt)
     {
@@ -1070,7 +1306,7 @@ public class Team7_SEEDB_JDBCC {
         Content = scan.nextLine();
 
         try {
-          // VarietyID 구하기 
+          // VarietyID 구하기
             String sql = "insert into NOTICE_BOARD"
                     +"(NWNum,NWTitle,NWTime,NWContent)"
                     +"values"
