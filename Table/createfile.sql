@@ -56,7 +56,7 @@ CREATE TABLE "ORDER"
 (
     OrderNum            NUMBER(10)      NOT NULL,
     OD_UserID           VARCHAR2(20)    NOT NULL,
-    Purchase_Date       DATE DEFAULT sysdate,
+    Purchase_Date       VARCHAR2(30),
     Order_Purpose       VARCHAR(4) CHECK(Order_Purpose IN ('R', 'B')), -- rent : R, buy : B
     OD_OrgName          VARCHAR2(40)    NOT NULL,
     OD_VarietyID        VARCHAR2(30)    NOT NULL,
