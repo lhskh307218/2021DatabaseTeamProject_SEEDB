@@ -665,6 +665,10 @@ public class Team7_SEEDB_JDBCC {
                String outputVarietyName = rs.getString(2);
                String outputOrgName = rs.getString(3);
                String outputOrgPurpose = rs.getString(4);
+               if (outputOrgPurpose.equalsIgnoreCase("L"))
+ 				  outputOrgPurpose = "대여";
+ 			  else if (outputOrgPurpose.equalsIgnoreCase("S"))
+ 				  outputOrgPurpose = "판매";
                System.out.println(outputSeedName + " | " + outputVarietyName + " | " + outputOrgName + " | " + outputOrgPurpose);
             }
          }catch(SQLException ex2) {
@@ -672,32 +676,6 @@ public class Team7_SEEDB_JDBCC {
             System.exit(1);
          }
          
-         
-         
-         
-         /*
-         // 구매/대여를 원하는 씨앗 검색
-         try {
-   		  	String sql = "SELECT S.VarietyName, ORG.OrgName, ORG.Org_Purpose \r\n"
-   				  + "FROM \"SEED\" S INNER JOIN HAS H ON S.VarietyID = H.VarietyID INNER JOIN ORGANIZATION ORG ON H.OrgName = ORG.OrgName \r\n"
-   				  + "WHERE S.SeedName LIKE '" + inputSeedName + "'";
-   		  	ResultSet rs = stmt.executeQuery(sql);
-   		  	System.out.println("<< 검색하신 씨앗의 품종 그 씨앗을 보유하고 있는 기관의 목록입니다 >>");
-   		  	System.out.println("Selected SEEDNAME: " + inputSeedName);
-   		  	System.out.println("VARIETYNAME | ORGANIZATION NAME               | PURPOSE");
-   		  	System.out.println("--------------------------------------------------------");
-            
-   		  	while (rs.next()) {
-   		  		String outputVarietyName = rs.getString(1);
-   		  		String outputOrgName = rs.getString(2);
-   		  		String outputOrgPurpose = rs.getString(3);
-   		  		System.out.println(outputVarietyName + " | " + outputOrgName + " | " + outputOrgPurpose);
-   		  	}
-   	  	}catch(SQLException ex2) {
-   	  		System.err.println("sql error = " + ex2.getMessage());
-   	  		System.exit(1);
-   	  	}
-         */
          ordering(conn, stmt);
       }
       else if (OrderMenu.equalsIgnoreCase("2")) {
@@ -735,6 +713,10 @@ public class Team7_SEEDB_JDBCC {
                 String outputVarietyName = rs.getString(2);
                 String outputOrgName = rs.getString(3);
                 String outputOrgPurpose = rs.getString(4);
+                if (outputOrgPurpose.equalsIgnoreCase("L"))
+  				  outputOrgPurpose = "대여";
+  			  else if (outputOrgPurpose.equalsIgnoreCase("S"))
+  				  outputOrgPurpose = "판매";
                 System.out.println(outputSeedName + " | " + outputVarietyName + " | " + outputOrgName + " | " + outputOrgPurpose);
                 orgcnt++;
             }
@@ -1066,6 +1048,10 @@ public class Team7_SEEDB_JDBCC {
 			  String outputVarietyName = rs.getString(1);
 			  String outputOrgName = rs.getString(2);
 			  String outputOrgPurpose = rs.getString(3);
+			  if (outputOrgPurpose.equalsIgnoreCase("L"))
+				  outputOrgPurpose = "대여";
+			  else if (outputOrgPurpose.equalsIgnoreCase("S"))
+				  outputOrgPurpose = "판매";
 			  System.out.println(outputVarietyName + " | " + outputOrgName + " | " + outputOrgPurpose);
 		  }
 	  }catch(SQLException ex2) {
@@ -1143,7 +1129,6 @@ public class Team7_SEEDB_JDBCC {
              System.err.println("sql error = " + ex2.getMessage());
              System.exit(1);
          }
-         
          if (PurposeKOR.equalsIgnoreCase("구매"))
         	 inputOrgPurpose = "B";
          else if (PurposeKOR.equalsIgnoreCase("대여"))
@@ -1204,6 +1189,10 @@ public class Team7_SEEDB_JDBCC {
             String outputQuantity = rs.getString(5);
             String outputOrgName = rs.getString(6);
             String outputOrderPurpose = rs.getString(7);
+            if (outputOrderPurpose.equalsIgnoreCase("R"))
+            	outputOrderPurpose = "대여";
+            else if (outputOrderPurpose.equalsIgnoreCase("B"))
+            	outputOrderPurpose = "구매";
             System.out.println("주문번호: " + outputOrderNum + " | 주문날짜: " + outputPurchaseDate + " | 주문한 씨앗 이름: " + outputSeedName + " | 주문한 품종 이름 : " + outputVarietyName + " | 주문량(g) : " + outputQuantity + " | 주문 기관: " + outputOrgName + " | 주문 목적: " + outputOrderPurpose);
          }
 
