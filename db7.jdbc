@@ -1306,10 +1306,10 @@ public class Team7_SEEDB_JDBCC {
             
             pstmt = conn.prepareStatement(sql);
 
-            pstmt.setString(2, Purpose);
-            pstmt.setString(3, Title);
-            pstmt.setString(4, UserID);
-            pstmt.setString(6, Content);
+            pstmt.setString(1, Purpose);
+            pstmt.setString(2, Title);
+            pstmt.setString(3, UserID);
+            pstmt.setString(4, Content);
             int rowCount = pstmt.executeUpdate();
             System.out.println(rowCount + "개의 행이 추가되었습니다.");
         }catch(SQLException ex2) {
@@ -1345,8 +1345,8 @@ public class Team7_SEEDB_JDBCC {
                     +"(NW_SEQ.NEXTVAL, ? , TO_CHAR(SYSDATE, 'YYYY.MM.DD HH24:MI'), ? )"; 
                
             pstmt = conn.prepareStatement(sql);
-            pstmt.setString(2, Title);
-            pstmt.setString(4, Content);
+            pstmt.setString(1, Title);
+            pstmt.setString(2, Content);
             int rowCount = pstmt.executeUpdate();
             System.out.println(rowCount + "개의 행이 추가되었습니다.");
                 
