@@ -899,7 +899,7 @@ public class Team7_SEEDB_JDBCC {
             				+ "           FROM (\r\n"
             				+ "                 SELECT OD.OD_VarietyID, OD.Purchase_Date, S.SeedName, S.VarietyName, OD.Quantity\r\n"
             				+ "                 FROM \"ORDER\" OD FULL OUTER JOIN \"SEED\" S ON OD.OD_VarietyID = S.VarietyID)\r\n"
-            				+ "           WHERE Purchase_date BETWEEN TRUNC(SYSDATE) AND TRUNC(SYSDATE) + 1)\r\n"
+            				+ "           WHERE TO_CHAR(SYSDATE, 'YYYY-MM-DD') < Purchase_Date)\r\n"
             				+ "     GROUP BY OD_VarietyID, VarietyName, SeedName\r\n"
             				+ "     ORDER BY COUNT(OD_VarietyID) DESC)";
             		ResultSet rs = stmt.executeQuery(sql);
@@ -932,7 +932,7 @@ public class Team7_SEEDB_JDBCC {
             				+ "           FROM (\r\n"
             				+ "                 SELECT OD.OD_VarietyID, OD.Purchase_Date, S.SeedName, S.VarietyName, OD.Quantity\r\n"
             				+ "                 FROM \"ORDER\" OD FULL OUTER JOIN \"SEED\" S ON OD.OD_VarietyID = S.VarietyID)\r\n"
-            				+ "           WHERE Purchase_Date BETWEEN TRUNC(SYSDATE) - 7 AND TRUNC(SYSDATE))\r\n"
+            				+ "           WHERE TO_CHAR(SYSDATE - 7, 'YYYY-MM-DD') < Purchase_Date)\r\n"
             				+ "     GROUP BY OD_VarietyID, VarietyName, SeedName\r\n"
             				+ "     ORDER BY COUNT(OD_VarietyID) DESC)";
             		ResultSet rs = stmt.executeQuery(sql);
@@ -965,7 +965,7 @@ public class Team7_SEEDB_JDBCC {
             				+ "           FROM (\r\n"
             				+ "                 SELECT OD.OD_VarietyID, OD.Purchase_Date, S.SeedName, S.VarietyName, OD.Quantity\r\n"
             				+ "                 FROM \"ORDER\" OD FULL OUTER JOIN \"SEED\" S ON OD.OD_VarietyID = S.VarietyID)\r\n"
-            				+ "           WHERE Purchase_Date BETWEEN TRUNC(SYSDATE) - 30 AND TRUNC(SYSDATE))\r\n"
+            				+ "           WHERE TO_CHAR(SYSDATE - 30, 'YYYY-MM-DD') < Purchase_Date)\r\n"
             				+ "     GROUP BY OD_VarietyID, VarietyName, SeedName\r\n"
             				+ "     ORDER BY COUNT(OD_VarietyID) DESC)";
             		ResultSet rs = stmt.executeQuery(sql);
@@ -998,7 +998,7 @@ public class Team7_SEEDB_JDBCC {
             				+ "           FROM (\r\n"
             				+ "                 SELECT OD.OD_VarietyID, OD.Purchase_Date, S.SeedName, S.VarietyName, OD.Quantity\r\n"
             				+ "                 FROM \"ORDER\" OD FULL OUTER JOIN \"SEED\" S ON OD.OD_VarietyID = S.VarietyID)\r\n"
-            				+ "           WHERE Purchase_Date BETWEEN TRUNC(SYSDATE) - 365 AND TRUNC(SYSDATE))\r\n"
+            				+ "           WHERE TO_CHAR(SYSDATE - 365, 'YYYY-MM-DD') < Purchase_Date)\r\n"
             				+ "     GROUP BY OD_VarietyID, VarietyName, SeedName\r\n"
             				+ "     ORDER BY COUNT(OD_VarietyID) DESC)";
             		ResultSet rs = stmt.executeQuery(sql);
@@ -1134,7 +1134,7 @@ public class Team7_SEEDB_JDBCC {
          else if (PurposeKOR.equalsIgnoreCase("대여"))
         	 inputOrgPurpose = "R";
          try {
-               String sql = "INSERT INTO \"ORDER\" VALUES (ORDER_SEQ.NEXTVAL, '" + UserID + "', TO_CHAR(SYSDATE, 'YYYY.MM.DD HH24:MI'), '" + inputOrgPurpose + "', '" + inputOrgName + "', '" + outputVarietyID + "', " + inputQuantity + ")";
+               String sql = "INSERT INTO \"ORDER\" VALUES (ORDER_SEQ.NEXTVAL, '" + UserID + "', TO_CHAR(SYSDATE, 'YYYY-MM-qDD HH24:MI'), '" + inputOrgPurpose + "', '" + inputOrgName + "', '" + outputVarietyID + "', " + inputQuantity + ")";
                System.out.println(sql);
                ResultSet rs = stmt.executeQuery(sql);
                System.out.println("\r\n<< 주문이 완료되었습니다. >>");
