@@ -1301,10 +1301,8 @@ public class Team7_SEEDB_JDBCC {
        Content = scan.nextLine();
 
         try {
-            String sql = "insert into \"BULLETIN_BOARD\""
-                                +"(BWNum,BWPurpose,BWTitle,BUserID,BWTime,BWContent)"
-                                +"values"
-                                +"(BW_SEQ.NEXTVAL, '" + Purpose + "', '" + Title + "', '" + UserID + "', TO_CHAR(SYSDATE, 'YYYY.MM.DD HH24:MI'), '" + Content + "')";
+            String sql = "insert into \"BULLETIN_BOARD\" (BWNum,BWPurpose,BWTitle,BUserID,BWTime,BWContent) "
+            		+ "values (BW_SEQ.NEXTVAL, ? , ? , ? , TO_CHAR(SYSDATE, 'YYYY.MM.DD HH24:MI'), ? )";
             
             pstmt = conn.prepareStatement(sql);
 
@@ -1344,7 +1342,7 @@ public class Team7_SEEDB_JDBCC {
             String sql = "insert into NOTICE_BOARD"
                     +"(NWNum,NWTitle,NWTime,NWContent)"
                     +"values"
-                    +"(NW_SEQ.NEXTVAL, '" + Title + "', TO_CHAR(SYSDATE, 'YYYY.MM.DD HH24:MI'), '" + Content +"')"; 
+                    +"(NW_SEQ.NEXTVAL, ? , TO_CHAR(SYSDATE, 'YYYY.MM.DD HH24:MI'), ? )"; 
                
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(2, Title);
