@@ -57,4 +57,37 @@ INSERT INTO HAS VALUES ('생판-2007-929', '소이벤처(주)');
 INSERT INTO HAS VALUES ('출원-2013-257', '소이벤처(주)');
 INSERT INTO HAS VALUES ('생판-1997-748', '소이벤처(주)');
 
+ALTER TABLE "HAS" ADD(Quantity NUMBER(8));
+
+UPDATE "HAS" SET Quantity = 99999999
+WHERE OrgName = '농촌진흥청';
+UPDATE "HAS" SET Quantity = 90000000
+WHERE OrgName = '주식회사씨드피아';
+UPDATE "HAS" SET Quantity = 80000000
+WHERE OrgName = '씨제이제일제당';
+UPDATE "HAS" SET Quantity = 70000000
+WHERE OrgName = '남평농업협동조합장';
+UPDATE "HAS" SET Quantity = 60000000
+WHERE OrgName = '현대종묘';
+UPDATE "HAS" SET Quantity = 80000000
+WHERE OrgName = '그린씨드';
+UPDATE "HAS" SET Quantity = 70050000
+WHERE OrgName = '산림품종관리센터';
+UPDATE "HAS" SET Quantity = 89000000
+WHERE OrgName = '(주)제농 에스앤티 농업회사법인';
+UPDATE "HAS" SET Quantity = 80788460
+WHERE OrgName = '(주)포테이토밸리';
+UPDATE "HAS" SET Quantity = 8950000
+WHERE OrgName = '농업회사법인 오스템바이오㈜';
+UPDATE "HAS" SET Quantity = 99000000
+WHERE OrgName = '수산식물관리센터';
+UPDATE "HAS" SET Quantity = 89788460
+WHERE OrgName = '(주)농심';
+UPDATE "HAS" SET Quantity = 90000000
+WHERE OrgName = '왕산종묘';
+UPDATE "HAS" SET Quantity = 80000000
+WHERE OrgName = '몬산토코리아 유한회사';
+UPDATE "HAS" SET Quantity = 70000000
+WHERE OrgName = '소이벤처(주)';
+
 COMMIT;
