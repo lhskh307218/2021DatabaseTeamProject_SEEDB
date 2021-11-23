@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>UserMainPage</title>
+    <link rel="stylesheet" href="/css/usernavi.css?ver=1" type="text/css" >
+    <style>
+        div {
+            font-weight: bold;
+            padding: 20px;
+        }
+        .navi {
+            background-color: #FFCE1F;
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        .purposemenu {
+            background-color: white;
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        li { float: left; }
+        #navi li a {
+            display: block;
+            color: #000000;
+            padding: 10px;
+            text-decoration: none;
+            text-align: center;
+            font-weight: bold;
+        }
+        #navi li a.current { 
+            background-color: #FFD600;
+            color: white'
+        }
+        #navi li a:hover:not(.current) {
+            background-color: #D0DB36;
+            color: white;
+        }
+        #purposemenu li a {
+            color: #C4C4C4;
+            display: block;
+            padding: 10px;
+            text-decoration: none;
+            text-align: center;
+            font-weight: bold;
+        }
+        #purposemenu li a.current {
+           color: black;
+           background-color: white;
+        }
+        #purposemenu li a:hover:not(.current) {
+            color: black;
+            background-color: white;
+        }
+        #purposemenudefault li a {
+            color: black;
+            background-color: white;
+        }
+        .weekbestSeed {
+            background-color: rgba( 196, 196, 196);
+            float: left;
+            height: 25%;
+            width: 100%;
+        }
+        select {
+            margin-top: 20px;
+            float: right;
+            width:150px;
+            height: 40px;
+            font-weight: bold;
+            text-align: left;
+            padding-left: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>네비게이션바</h1>
+    <ul class="navi" id="navi">
+        <li><a href="#">씨앗 구매</a></li>
+        <li><a href="#">주문 목록</a></li>
+        <li><a href="#">공지 사항</a></li>
+        <li><a href="#">커뮤니티</a></li>
+    </ul>
+    <ul class="purposemenu" id="purposemenu">
+        <li><a href="#" id="purposemenudefault">전체</a></li>
+        <li><a href="#">식용</a></li>
+        <li><a href="#">관상용</a></li>
+        <li><a href="#">사료용</a></li>
+    </ul>
+    <div class="weekbestSeed">
+        이번 주 판매 베스트<br><br>
+        <img src="http://jaga.or.kr/wp-content/uploads/2019/02/%ED%85%83%EB%B0%AD-%EC%94%A8%EC%95%97_1.jpg" width="20%" height="90%" hspace=10>
+        <img src="https://img.hankyung.com/photo/201908/PYH2019040205250000500_P2.jpg" width="20%" height="90%" hspace=10>
+    </div>
+    <div>
+        <select>
+            <option selected>정렬 방식</option>
+            <option>청소년 인기순</option>
+            <option>청년 인기순</option>
+            <option>중년 인기순</option>
+            <option>장년 인기순</option>
+            <option>하루 인기순</option>
+            <option>한달 인기순</option>
+            <option>일년 인기순</option>
+        </select><br>
+        <div style="padding-top: 55px;">
+            <img src="http://jaga.or.kr/wp-content/uploads/2019/02/%ED%85%83%EB%B0%AD-%EC%94%A8%EC%95%97_1.jpg" width="23%" height="25%" hspace=10>
+            <img src="https://img.hankyung.com/photo/201908/PYH2019040205250000500_P2.jpg" width="23%" height="25%" hspace=10>
+            <img src="http://jaga.or.kr/wp-content/uploads/2019/02/%ED%85%83%EB%B0%AD-%EC%94%A8%EC%95%97_1.jpg" width="23%" height="25%" hspace=10>
+            <img src="https://img.hankyung.com/photo/201908/PYH2019040205250000500_P2.jpg" width="23%" height="25%" hspace=10>
+        </div>
+    </div>
+</body>
+</html>
