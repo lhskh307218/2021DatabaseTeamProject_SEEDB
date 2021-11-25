@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>mangerSeedAllow</title>
+    <link rel="stylesheet" href="/css/usernavi.css?ver=1" type="text/css" >
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+        .navi {
+            background-color: #FFCE1F;
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        .purposemenu {
+            background-color: white;
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        li { float: left; }
+        #navi li a {
+            display: block;
+            color: #000000;
+            padding: 10px;
+            text-decoration: none;
+            text-align: center;
+            font-weight: bold;
+        }
+        #navi li a.current { 
+            background-color: #FFD600;
+            color: white'
+        }
+        #navi li a:hover:not(.current) {
+            background-color: #D0DB36;
+            color: white;
+        }
+        .name-rectangle_request {
+            display: block;
+            float: left;
+            width: 25%;
+            height: 30%;
+
+            margin-top: 3%;
+            margin-left: 6%;
+            margin-bottom: 5%;
+            border-radius: 30px 30px 30px 30px;
+            background-color: #D0DB36;
+
+            text-align: center;
+            color: white;
+            font-weight: bold;
+            font-size: 25px;
+        }
+        .name-rectangle_accepted {
+            display: block;
+            float: left;
+            width: 25%;
+            height: 30%;
+
+            margin-top: 3%;
+            margin-left: 6%;
+            margin-bottom: 5%;
+            border-radius: 30px 30px 30px 30px;
+            background-color: #CBCBCB;
+
+            text-align: center;
+            color: white;
+            font-weight: bold;
+            font-size: 25px;
+        }
+        .content-rectangle_request {
+            display: inline-block;
+            width: 90%;
+            height: 100%;
+            padding : 5%;
+
+            background-color: #F8FFDC;
+            box-shadow: 9px 10px 17px rgba(0, 0, 0, 0.1);
+            border-radius: 0px 0px 30px 30px;
+        }
+        .content-rectangle_accepted {
+            display: inline-block;
+            width: 90%;
+            height: 100%;
+            padding : 5%;
+
+            background-color: #DEDEDE;
+            box-shadow: 9px 10px 17px rgba(0, 0, 0, 0.1);
+            border-radius: 0px 0px 30px 30px;
+        }
+        .text_request {
+            display: inline-block;
+            background-color: #FFFFFF;
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+            margin-top: 5%;
+            padding: 5%;
+            width: 80%;
+            height: 55%;
+            font-size: 20px;
+            color: black;
+            font-weight: bold;
+            text-align: center;
+        }
+        .text_accepted {
+            display: inline-block;
+            background-color: #FFFFFF;
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+            margin-top: 5%;
+            padding: 5%;
+            width: 80%;
+            height: 70%;
+            font-size: 20px;
+            color: black;
+            font-weight: bold;
+            text-align: center;
+        }
+        .rectangle_btn_request {
+            display: inline-block;
+            width: 100px;
+            height: 50px;
+
+            margin-left: 5%;
+            margin-top:5%;
+            margin-bottom: 5%;
+
+            background-color: #D0DB36;
+            border-radius: 30px;
+
+            text-align: center;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>네비게이션바</h1>
+    <ul class="navi" id="navi">
+        <li><a href="#">씨앗 구매</a></li>
+        <li><a href="#">주문 목록</a></li>
+        <li><a href="#">공지 사항</a></li>
+        <li><a href="#">커뮤니티</a></li>
+    </ul>
+
+    <div class="name-rectangle_request">
+        승인요청<br>
+        <div class="content-rectangle_request">
+            <div class="text_request">
+                기관 이름<br>
+                씨앗 이름<br>
+                품종 이름<br>
+                품종 번호<br>
+                등록 수량<br>
+                대여 및 구매 여부
+            </div>
+            <div class="wrap">
+                <button class="rectangle_btn_request">승인하기</button>
+                <button class="rectangle_btn_request">반려하기</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="name-rectangle_request">
+        승인 요청<br>
+        <div class="content-rectangle_request">
+            <div class="text_request">
+                기관 이름<br>
+                씨앗 이름<br>
+                품종 이름<br>
+                품종 번호<br>
+                등록 수량<br>
+                대여 및 구매 여부
+            </div>
+            <div class="wrap">
+                <button class="rectangle_btn_request">승인하기</button>
+                <button class="rectangle_btn_request">반려하기</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="name-rectangle_accepted">
+        승인 완료<br>
+        <div class="content-rectangle_accepted">
+            <div class="text_accepted">
+                기관 이름<br>
+                씨앗 이름<br>
+                품종 이름<br>
+                품종 번호<br>
+                등록 수량<br>
+                대여 및 구매 여부
+            </div>
+        </div>
+    </div>
+
+    <div class="name-rectangle_accepted">
+        승인 완료<br>
+        <div class="content-rectangle_accepted">
+            <div class="text_accepted">
+                기관 이름<br>
+                씨앗 이름<br>
+                품종 이름<br>
+                품종 번호<br>
+                등록 수량<br>
+                대여 및 구매 여부
+            </div>
+        </div>
+    </div>
+
+    <div class="name-rectangle_accepted">
+        승인 완료<br>
+        <div class="content-rectangle_accepted">
+            <div class="text_accepted">
+                기관 이름<br>
+                씨앗 이름<br>
+                품종 이름<br>
+                품종 번호<br>
+                등록 수량<br>
+                대여 및 구매 여부
+            </div>
+        </div>
+    </div>
+
+    <div class="name-rectangle_request">
+        승인 요청<br>
+        <div class="content-rectangle_request">
+            <div class="text_request">
+                기관 이름<br>
+                씨앗 이름<br>
+                품종 이름<br>
+                품종 번호<br>
+                등록 수량<br>
+                대여 및 구매 여부
+            </div>
+            <div class="wrap">
+                <button class="rectangle_btn_request">승인하기</button>
+                <button class="rectangle_btn_request">반려하기</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="name-rectangle_request">
+        승인 요청<br>
+        <div class="content-rectangle_request">
+            <div class="text_request">
+                기관 이름<br>
+                씨앗 이름<br>
+                품종 이름<br>
+                품종 번호<br>
+                등록 수량<br>
+                대여 및 구매 여부
+            </div>
+            <div class="wrap">
+                <button class="rectangle_btn_request">승인하기</button>
+                <button class="rectangle_btn_request">반려하기</button>
+            </div>
+        </div>
+    </div>
+    
+</body>
