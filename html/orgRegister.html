@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lnag="ko">
+    <head>
+        <meta charset="UTF-8">
+        <title>판매기관 회원가입</title>
+        <link rel="stylesheet" href="./css/register.css">
+        
+    </head>
+    <body>
+        <div style = "float:left">
+            <img src="../image/Logo.png" alt="Logo">
+        </div>
+        <div id="wrapper">
+            <div id="content">
+                <center><h1>판매기관 회원가입</h1></center>
+                <!-- 아이디 -->
+                <div>
+                    <h3 class="join_title">
+                        <label for="name">기관이름</label>
+                    </h3>
+                    <span class="box int_id">
+                        <input type="text" id="name" class="int" maxlength="20">
+                        <span id="alertTxt">이미 존재하는 기관입니다.</span>
+                        <img src="../image/Logo.png" id="pswd1_img1" class="pswdImg">
+                    </span>
+                    <span class="error_next_box"></span>
+                </div>
+
+                <!-- 기관 목적 -->
+                <div>
+                    <h3 class="join_title"><label for="purpose">목적</label></h3>
+                    <span class="box gender_code">
+                        <select id="purpose" class="sel">
+                            <option>목적</option>
+                            <option value="L">대여</option>
+                            <option value="S">판매</option>
+                            <!--저희 대여 및 판매 둘 다 표시 하나요???-->
+                            <option value="B">대여 및 판매</option>
+                        </select>                            
+                    </span>
+                    <span class="error_next_box">필수 정보입니다.</span>
+                </div>
+
+                <!--지역-->
+                <!--질문!!!!-->
+
+                <!--제휴시작 날짜-->
+                <div>
+                    <h3 class="join_title"><label for="AffiliateDate">제휴시작 날짜</label></h3>
+
+                    <div id="bir_wrap">
+                        <!-- 년도 -->
+                        <div id="bir_yy">
+                            <span class="box">
+                                <input type="text" id="yy" class="int" maxlength="4" placeholder="년(4자)">
+                            </span>
+                        </div>
+
+                        <!-- 월 -->
+                        <div id="bir_mm">
+                            <span class="box">
+                                <select id="mm" class="sel">
+                                    <option>월</option>
+                                    <option value="01">1</option>
+                                    <option value="02">2</option>
+                                    <option value="03">3</option>
+                                    <option value="04">4</option>
+                                    <option value="05">5</option>
+                                    <option value="06">6</option>
+                                    <option value="07">7</option>
+                                    <option value="08">8</option>
+                                    <option value="09">9</option>                                    
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                </select>
+                            </span>
+                        </div>
+
+                        <!-- 일 -->
+                        <div id="bir_dd">
+                            <span class="box">
+                                <input type="text" id="dd" class="int" maxlength="2" placeholder="일">
+                            </span>
+                        </div>
+
+                    </div>
+                    <span class="error_next_box"></span>    
+                </div>
+                <!--제휴기간-->
+                <div>
+                    <h3 class="join_title">
+                        <label for="AffiliatePeriod">기관이름</label>
+                    </h3>
+                    <span class="box int_id">
+                        <input type="text" id="AffiliatePeriod" class="int" maxlength="20">
+                        <span id="alertTxt">제휴일수가 일치하지 않습니다..</span>
+                        <img src="../image/Logo.png" id="pswd1_img1" class="pswdImg">
+                    </span>
+                    <span class="error_next_box"></span>
+                </div>
+
+                <!-- 비밀번호 -->
+                <div>
+                    <h3 class="join_title"><label for="pw">비밀번호</label></h3>
+                    <span class="box int_pass">
+                        <input type="password" id="pw" class="int" maxlength="20">
+                    </span>
+                    <span class="error_next_box"></span>
+                </div>
+
+                <!-- 비밀번호 재확인 -->
+                <div>
+                    <h3 class="join_title"><label for="check-pw">비밀번호 재확인</label></h3>
+                    <span class="box int_pass_check">
+                        <input type="password" id="check-pw" class="int" maxlength="20">
+                        <span id="alertTxt">비밀번호 불일치</span>
+                        <img src="../image/Logo.png" id="pswd1_img1" class="pswdImg">
+                    </span>
+                    <span class="error_next_box"></span>
+                </div>
+
+                 <!-- 전화번호 -->
+                <div>
+                    <h3 class="join_title"><label for="phoneN">휴대전화</label></h3>
+                    <span class="box int_mobile">
+                        <input type="text" id="phoneN" class="int" maxlength="16" placeholder="전화번호 입력">
+                    </span>
+                    <span class="error_next_box"></span>    
+                </div>
+
+                <!-- 이메일 -->
+                <div>
+                    <h3 class="join_title"><label for="email">본인확인 이메일</label></h3>
+                    <span class="box int_email">
+                        <input type="text" id="email" class="int" maxlength="100" placeholder="seedb@naver.com">
+                    </span>
+                    <span class="error_next_box">이메일 주소를 다시 확인해주세요.</span>    
+                </div>
+
+                <!-- JOIN BTN-->
+                <div class="btn_area">
+                    <button type="button" id="btnJoin" onclick="location.href='Login.html'">
+                        <span><b>가입하기</b></span>
+                    </button>
+                </div>
+
+                
+
+            </div> 
+            <!-- content-->
+
+        </div> 
+        <!-- wrapper -->
+    <!--<script src="main.js"></script>-->
+    </body>
+</html>

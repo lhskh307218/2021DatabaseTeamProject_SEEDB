@@ -1,33 +1,9 @@
-html,
-body {
-  height: 100%;
+.outer {
+    display: flex;
 }
 
-body {
-  padding-top: 5rem;
-  background-color: #ffffff;
-}
-
-input{
-    margin-bottom: 15px;
-}
-
-a:link{
-    text-decoration-line: none;
-    color: black;
-}
-
-a:hover { 
-    color:red; 
-}
-
-a:active { 
-    color:green; 
-}
-
-.form-signin {
-  max-width: 25rem;
-  margin: auto;
+.inner {
+    margin: auto;
 }
 
 button {
@@ -47,7 +23,7 @@ button {
     }
 }
 
-.Login_button {
+.goRegister {
     position: relative;
     border: none;
     min-width: 200px;
@@ -65,11 +41,11 @@ button {
     transition: 0.3s;
 }
 
-.Login_button:hover {
+.goRegister:hover {
     transform: scale(1.2);
 }
 
-.Login_button:hover::after {
+.goRegister:hover::after {
     content: "";
     width: 30px;
     height: 30px;
