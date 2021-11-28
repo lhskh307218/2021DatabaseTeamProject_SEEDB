@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>userOrderList</title>
 <style>
         html, body {
@@ -164,17 +164,17 @@
     </style>
 </head>
 <body>
-<h1>³×ºñ°ÔÀÌ¼Ç¹Ù</h1>
+<h1>ë„¤ë¹„ê²Œì´ì…˜ë°”</h1>
     <ul class="navi" id="navi">
-        <li><a href="userMainAll.jsp">¾¾¾Ñ ±¸¸Å</a></li>
-        <li><a class="current" href="userOrderList.jsp">ÁÖ¹® ¸ñ·Ï</a></li>
-        <li><a href="#">°øÁö »çÇ×</a></li>
-        <li><a href="#">Ä¿¹Â´ÏÆ¼</a></li>
+        <li><a href="userMainAll.jsp">ì”¨ì•— êµ¬ë§¤</a></li>
+        <li><a class="current" href="userOrderList.jsp">ì£¼ë¬¸ ëª©ë¡</a></li>
+        <li><a href="#">ê³µì§€ ì‚¬í•­</a></li>
+        <li><a href="#">ì»¤ë®¤ë‹ˆí‹°</a></li>
     </ul>
     <form action="deleteUserOrderList.jsp" method="post">
 	    <div style="margin-top:2%; font-weight:bold; font-size:20px; text-align:center;">	
-    		<input type="text" class="deltext" name="delOrderNum" placeholder="Ãë¼ÒÇÒ ÁÖ¹®ÀÇ ÁÖ¹®¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä.">
-            	<button class="rectangle_btn" type="submit">Ãë¼ÒÇÏ±â</button>
+    		<input type="text" class="deltext" name="delOrderNum" placeholder="ì·¨ì†Œí•  ì£¼ë¬¸ì˜ ì£¼ë¬¸ë²ˆí˜¸ë¥¼ ìž…ë ¥í•˜ì„¸ìš”.">
+            	<button class="rectangle_btn" type="submit">ì·¨ì†Œí•˜ê¸°</button>
     	</div>
     </form>
 <%
@@ -200,7 +200,7 @@
    String Quantity = "";
    
    try {
-       // VarietyID ±¸ÇÏ±â
+       // VarietyID êµ¬í•˜ê¸°
        String sql = "SELECT OrderNum, Purchase_Date, SeedName, VarietyName, Quantity, OD_OrgName, Order_Purpose\r\n"
        		+ "FROM \"ORDER\" INNER JOIN \"SEED\" ON OD_VarietyID = VarietyID\r\n"
        		+ "WHERE OD_UserID LIKE '" + ID + "'";
@@ -216,22 +216,22 @@
           
           if (OrderPurpose.equals("R")) { %>
         	  <div class="name_rectangle_rent">
-              ´ë¿©<br>
+              ëŒ€ì—¬<br>
               <div class="content_rectangle_rent">
               <form action="userDeleteOrderList.jsp" method="post">
-              	  ÁÖ¹® ¹øÈ£
+              	  ì£¼ë¬¸ ë²ˆí˜¸
               	  <input type="text" name="OrderNum" class="text" placeholder="<%=OrderNum%>" readonly><br>
-                  ´ë¿©ÇÑ °í°´ ¾ÆÀÌµð
+                  ëŒ€ì—¬í•œ ê³ ê° ì•„ì´ë””
                   <input type="text" name="ID" class="text" placeholder="<%=ID %>" readonly><br>
-                  ´ë¿©ÇÑ ¾¾¾Ñ ÀÌ¸§
+                  ëŒ€ì—¬í•œ ì”¨ì•— ì´ë¦„
                   <input type="text" name="SeedName" class="text" placeholder="<%=SeedName %>" readonly><br>
-                  ´ë¿©ÇÑ Ç°Á¾ ÀÌ¸§
+                  ëŒ€ì—¬í•œ í’ˆì¢… ì´ë¦„
                   <input type="text" name="VarietyName" class="text" placeholder="<%=VarietyName %>" readonly><br>
-                  ´ë¿©ÇÑ ±â°ü
+                  ëŒ€ì—¬í•œ ê¸°ê´€
                   <input type="text" name="OrgName" class="text" placeholder="<%=OrgName %>" readonly><br>
-                  ´ë¿©ÇÑ ¼ö·®
+                  ëŒ€ì—¬í•œ ìˆ˜ëŸ‰
                   <input type="text" name="Quantity" class="text" placeholder="<%=Quantity %>" readonly><br>
-                  ´ë¿©ÇÑ ³¯Â¥
+                  ëŒ€ì—¬í•œ ë‚ ì§œ
                   <input type="text" name="Purchase_date" class="text" placeholder="<%=PurchaseDate %>" readonly><br>
                   
               </form>
@@ -241,22 +241,22 @@
           }
           else if (OrderPurpose.equals("B")) { %>
     	  	  <div class="name_rectangle_buy">
-          	  ±¸¸Å<br>
+          	  êµ¬ë§¤<br>
           	  <div class="content_rectangle_buy">
           	      <form action="deleteOrderList.jsp" method="post">
-          	  	  ÁÖ¹® ¹øÈ£
+          	  	  ì£¼ë¬¸ ë²ˆí˜¸
           	  	  <input type="text" name="OrderNum" class="text" placeholder="<%=OrderNum%>" readonly><br>
-              	  ±¸¸ÅÇÑ °í°´ ¾ÆÀÌµð
+              	  êµ¬ë§¤í•œ ê³ ê° ì•„ì´ë””
               	  <input type="text" name="ID" class="text" placeholder="<%=ID %>" readonly><br>
-              	  ±¸¸ÅÇÑ ¾¾¾Ñ ÀÌ¸§
+              	  êµ¬ë§¤í•œ ì”¨ì•— ì´ë¦„
                	  <input type="text" name="SeedName" class="text" placeholder="<%=SeedName %>" readonly><br>
-               	  ±¸¸ÅÇÑ Ç°Á¾ ÀÌ¸§
+               	  êµ¬ë§¤í•œ í’ˆì¢… ì´ë¦„
               	  <input type="text" name="VarietyName" class="text" placeholder="<%=VarietyName %>" readonly><br>
-                  ±¸¸ÅÇÑ ±â°ü
+                  êµ¬ë§¤í•œ ê¸°ê´€
               	  <input type="text" name="OrgName" class="text" placeholder="<%=OrgName %>" readonly><br>
-              	  ±¸¸ÅÇÑ ¼ö·®
+              	  êµ¬ë§¤í•œ ìˆ˜ëŸ‰
                   <input type="text" name="Quantity" class="text" placeholder="<%=Quantity %>" readonly><br>
-              	  ±¸¸ÅÇÑ ³¯Â¥
+              	  êµ¬ë§¤í•œ ë‚ ì§œ
               	  <input type="text" name="Purchase_date" class="text" placeholder="<%=PurchaseDate %>" readonly><br>
           	  </form>
           	  </div>
