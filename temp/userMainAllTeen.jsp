@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
  pageEncoding="UTF-8"%>
 <!-- import JDBC package -->
-<%@ page language="java" import="java.text.*, java.sql.*" %>
+<%@ page language="java" import="java.text.*, java.sql.*" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -187,7 +187,7 @@
         		<form action="userSelectSeed.jsp" method="post">
         			<input type="submit" class="weekBestSeed" name="SeedName" value="<%=SeedName %>" onclick="location.href='userSelectSeed.jsp'">
         		</form>
-		<%
+        		<%
             }
     		
     	}catch(SQLException ex2) {
@@ -199,8 +199,8 @@
     <form action="" name="frm">
     	<div>
         	<select name="sortlist" onchange="location=document.frm.sortlist.value">
-            	<option selected>정렬 방식</option>
-            	<option value="userMainAllTeen.jsp">청소년 인기순</option>
+            	<option value="userMainAllTeen.jsp">정렬 방식</option>
+            	<option selected value="userMainAllTeen.jsp">청소년 인기순</option>
             	<option value="userMainAllYouth.jsp">청년 인기순</option>
             	<option value="userMainAllMid.jsp">중년 인기순</option>
             	<option value="userMainAllOld.jsp">장년 인기순</option>
@@ -218,28 +218,29 @@
     			+ "FROM(\r\n"
     			     + "SELECT SeedName AS TEEN_SEEDNAME, COUNT(*) AS VARIETYCOUNT, SUM(Quantity) AS Total_QUANTITY\r\n"
     			     + "FROM (\r\n"
-    			          + "SELECT OD_UserID, OD_VarietyID, Quantity, SeedName\r\n"
+    			          + "SELECT OD_UserID, OD_VarietyID, Age, Quantity, SeedName\r\n"
     			          + "FROM (\r\n"
-    			                 + "SELECT OD.OD_USERID, OD.OD_VarietyID, OD.Quantity, S.SeedName\r\n"
-    			                 + "FROM \"ORDER\" OD INNER  JOIN SEED S ON OD.OD_VarietyID = S.VarietyID))\r\n"
+    			                 + "SELECT OD.OD_USERID, OD.OD_VarietyID, AGE, OD.Quantity, S.SeedName\r\n"
+    			                 + "FROM \"USER\" U\r\n"
+    			                 + "INNER JOIN \"ORDER\" OD ON U.UserID = OD.OD_UserID\r\n"
+    			                 + "FULL OUTER JOIN SEED S ON OD.OD_VarietyID = S.VarietyID)\r\n"
+    			           + "WHERE Age < 20)\r\n"
     			     + "GROUP BY OD_VarietyID, SeedName\r\n"
     			     + "ORDER BY COUNT(OD_VarietyID) DESC)";
     	rs = stmt.executeQuery(sql);
         while (rs.next()) {
-           String SeedName = rs.getString(2);           
-        %>
-        <form action="userSelectSeed.jsp" method="post">
-        	<input type="submit" class="seeds" name="SeedName" value="<%=SeedName %>" onclick="location.href='userSelectSeed.jsp'">
-        </form>
-        	
-        <%
+           String SeedName = rs.getString(2);
+           %>
+   			<form action="userSelectSeed.jsp" method="post">
+           		<input type="submit" class="seeds" name="SeedName" value="<%=SeedName %>" onclick="location.href='userSelectSeed.jsp'">
+           	</form>
+           <%
         }
     }catch(SQLException ex2) {
-       System.out.println("sql error = " + ex2.getMessage());
-       System.exit(1);
+    	System.out.println("sql error = " + ex2.getMessage());
+    	System.exit(1);
     }
     %>
-           
     </div>
 
 </body>

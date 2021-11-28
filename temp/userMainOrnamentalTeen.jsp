@@ -1,26 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
  pageEncoding="UTF-8"%>
 <!-- import JDBC package -->
-<%@ page language="java" import="java.text.*, java.sql.*" %>
+<%@ page language="java" import="java.text.*, java.sql.*" %>    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="EUC-KR">
 <title>userMainAll</title>
 <style>
-		.footer {
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 100%;
-            height: 115px;
-
-            text-align: right;
-            color:white;
-            font-size: 20px;
-            font-weight: bold;
-            background-color: #FFCE1F;
-        }
         .navi {
             background-color: #FFCE1F;
             list-style-type: none;
@@ -137,9 +124,9 @@
         <li><a href="#">커뮤니티</a></li>
     </ul>
     <ul class="purposemenu" id="purposemenu">
-        <li><a class="current" href="userMainAll.jsp">전체</a></li>
+        <li><a href="userMainAll.jsp">전체</a></li>
         <li><a href="userMainEdible.jsp">식용</a></li>
-        <li><a href="userMainOrnamental.jsp">관상용</a></li>
+        <li><a class="current" href="userMainOrnamental.jsp">관상용</a></li>
         <li><a href="userMainPet.jsp">사료용</a></li>
     </ul>
     <div class="weekbestSeedBack">
@@ -172,11 +159,12 @@
     				+ "FROM(\r\n"
     				     + "SELECT SeedName AS TEEN_SEEDNAME, COUNT(*) AS VARIETYCOUNT, SUM(Quantity) AS Total_QUANTITY\r\n"
     				     + "FROM (\r\n"
-    				           + "SELECT OD_VarietyID, Purchase_Date, SeedName, Quantity\r\n"
+    				           + "SELECT OD_VarietyID, Purchase_Date, SeedName, Quantity, SeedPurPose\r\n"
     				           + "FROM (\r\n"
-    				                 + "SELECT OD.OD_VarietyID, OD.Purchase_Date, S.SeedName, OD.Quantity\r\n"
+    				                 + "SELECT OD.OD_VarietyID, OD.Purchase_Date, S.SeedName, OD.Quantity, S.SeedPurpose\r\n"
     				                 + "FROM \"ORDER\" OD FULL OUTER JOIN \"SEED\" S ON OD.OD_VarietyID = S.VarietyID)\r\n"
-    				           + "WHERE TO_CHAR(SYSDATE - 7, 'YYYY-MM-DD') < Purchase_Date)\r\n"
+    				           + "WHERE TO_CHAR(SYSDATE - 7, 'YYYY-MM-DD') < Purchase_Date\r\n"
+    				           + "AND SeedPurPose='관상용')\r\n"
     				     + "GROUP BY OD_VarietyID, SeedName\r\n"
     				     + "ORDER BY COUNT(OD_VarietyID) DESC)\r\n"
     				+ "WHERE ROWNUM <= 5";
@@ -187,7 +175,7 @@
         		<form action="userSelectSeed.jsp" method="post">
         			<input type="submit" class="weekBestSeed" name="SeedName" value="<%=SeedName %>" onclick="location.href='userSelectSeed.jsp'">
         		</form>
-		<%
+       		<%
             }
     		
     	}catch(SQLException ex2) {
@@ -199,14 +187,14 @@
     <form action="" name="frm">
     	<div>
         	<select name="sortlist" onchange="location=document.frm.sortlist.value">
-            	<option selected>정렬 방식</option>
-            	<option value="userMainAllTeen.jsp">청소년 인기순</option>
-            	<option value="userMainAllYouth.jsp">청년 인기순</option>
-            	<option value="userMainAllMid.jsp">중년 인기순</option>
-            	<option value="userMainAllOld.jsp">장년 인기순</option>
-            	<option value="userMainAllDay.jsp">하루 인기순</option>
-            	<option value="userMainAllMonth.jsp">한달 인기순</option>
-            	<option value="userMainAllYear.jsp">일년 인기순</option>
+            	<option value="userMainOrnamentalTeen.jsp">정렬 방식</option>
+            	<option selected value="userMainOrnamentalTeen.jsp">청소년 인기순</option>
+            	<option value="userMainOrnamentalYouth.jsp">청년 인기순</option>
+            	<option value="userMainOrnamentalMid.jsp">중년 인기순</option>
+            	<option value="userMainOrnamentalOld.jsp">장년 인기순</option>
+            	<option value="userMainOrnamentalDay.jsp">하루 인기순</option>
+            	<option value="userMainOrnamentalMonth.jsp">한달 인기순</option>
+            	<option value="userMainOrnamentalYear.jsp">일년 인기순</option>
         	</select><br>
     	</div>
     </form>
@@ -218,28 +206,30 @@
     			+ "FROM(\r\n"
     			     + "SELECT SeedName AS TEEN_SEEDNAME, COUNT(*) AS VARIETYCOUNT, SUM(Quantity) AS Total_QUANTITY\r\n"
     			     + "FROM (\r\n"
-    			          + "SELECT OD_UserID, OD_VarietyID, Quantity, SeedName\r\n"
+    			          + "SELECT OD_UserID, OD_VarietyID, Age, Quantity, SeedName, SeedPurPose\r\n"
     			          + "FROM (\r\n"
-    			                 + "SELECT OD.OD_USERID, OD.OD_VarietyID, OD.Quantity, S.SeedName\r\n"
-    			                 + "FROM \"ORDER\" OD INNER  JOIN SEED S ON OD.OD_VarietyID = S.VarietyID))\r\n"
+    			                 + "SELECT OD.OD_USERID, OD.OD_VarietyID, AGE, OD.Quantity, S.SeedName, S.SeedPurPose\r\n"
+    			                 + "FROM \"USER\" U\r\n"
+    			                 + "INNER JOIN \"ORDER\" OD ON U.UserID = OD.OD_UserID\r\n"
+    			                 + "FULL OUTER JOIN SEED S ON OD.OD_VarietyID = S.VarietyID)\r\n"
+    			           + "WHERE Age < 21\r\n"
+    			           + "AND SeedPurpose = '관상용')\r\n"
     			     + "GROUP BY OD_VarietyID, SeedName\r\n"
     			     + "ORDER BY COUNT(OD_VarietyID) DESC)";
     	rs = stmt.executeQuery(sql);
         while (rs.next()) {
-           String SeedName = rs.getString(2);           
-        %>
-        <form action="userSelectSeed.jsp" method="post">
-        	<input type="submit" class="seeds" name="SeedName" value="<%=SeedName %>" onclick="location.href='userSelectSeed.jsp'">
-        </form>
-        	
-        <%
+           String SeedName = rs.getString(2);
+           %>
+   			<form action="userSelectSeed.jsp" method="post">
+           		<input type="submit" class="seeds" name="SeedName" value="<%=SeedName %>" onclick="location.href='userSelectSeed.jsp'">
+           	</form>
+           <%
         }
     }catch(SQLException ex2) {
-       System.out.println("sql error = " + ex2.getMessage());
-       System.exit(1);
+    	System.out.println("sql error = " + ex2.getMessage());
+    	System.exit(1);
     }
     %>
-           
     </div>
 
 </body>
