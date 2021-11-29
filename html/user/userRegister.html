@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lnag="ko">
+    <head>
+        <meta charset="UTF-8">
+        <title>사용자/관리자 회원가입</title>
+        <link rel="stylesheet" href="./css/register.css">
+        
+    </head>
+    <body>
+        <div style = "float:left">
+            <img src="./image/Logo.png" alt="Logo">
+        </div>
+        <div id="wrapper">
+            <div id="content">
+                <center><h1>사용자 회원가입</h1></center>
+                <form action="jsp/userRegister.jsp" metho=post>
+	                <!-- 아이디 -->
+	                <div>
+	                    <h3 class="join_title">
+	                        <label for="id">아이디</label>
+	                    </h3>
+	                    <span class="box int_id">
+	                        <input type="text" id="id" class="int" name="UserID" maxlength="20">
+	                        <img src="./image/Logo.png" id="pswd1_img1" class="pswdImg">
+	                    </span>
+	                    <span class="error_next_box"></span>
+	                </div>
+	
+	                <!-- 이름 -->
+	                <div>
+	                    <h3 class="join_title">
+	                        <label for="name">이름</label>
+	                    </h3>
+	                    <span class="box int_id">
+	                        <input type="text" id="name" class="int" name="UserName" maxlength="20">
+	                    </span>
+	                    <span class="error_next_box"></span>
+	                </div>
+	
+	                <!-- 비밀번호 -->
+	                <div>
+	                    <h3 class="join_title"><label for="pw">비밀번호</label></h3>
+	                    <span class="box int_pass">
+	                        <input type="password" id="pw" class="int" name="UserPW" maxlength="20">
+	                    </span>
+	                    <span class="error_next_box"></span>
+	                </div>
+	
+	                <!-- 비밀번호 재확인 -->
+	                <div>
+	                    <h3 class="join_title"><label for="check-pw">비밀번호 재확인</label></h3>
+	                    <span class="box int_pass_check">
+	                        <input type="password" id="check-pw" class="int" name="User_checkPW" maxlength="20">
+	                        <span id="alertTxt">비밀번호 불일치</span>
+	                        <img src="../image/Logo.png" id="pswd1_img1" class="pswdImg">
+	                    </span>
+	                    <span class="error_next_box"></span>
+	                </div>
+	
+	                <!-- 주소 -->
+	                <div>
+	                    <h3 class="join_title"><label for="address">주소</label></h3>
+	                    <span class="box int_name">
+	                        <input type="text" id="address" class="int" maxlength="20" name="UserAddr" placeholder="ex) 대구광역시 북구 산격동 대학로 80">
+	                    </span>
+	                    <span class="error_next_box"></span>
+	                </div>
+	
+	                <!-- 나이 -->
+	                <div>
+	                    <h3 class="join_title"><label for="age">나이</label></h3>
+	                    <span class="box int_name">
+	                        <input type="text" id="age" class="int" name="UserAge" maxlength="20">
+	                    </span>
+	                    <span class="error_next_box"></span>
+	                </div>
+	
+	                 <!-- 전화번호 -->
+	                <div>
+	                    <h3 class="join_title"><label for="phoneN">휴대전화</label></h3>
+	                    <span class="box int_mobile">
+	                        <input type="text" id="phoneN" class="int" name="UserPhoneN" maxlength="16" placeholder="전화번호 입력">
+	                    </span>
+	                    <span class="error_next_box"></span>    
+	                </div>
+	
+	                <!-- 성별 -->
+	                <div>
+	                    <h3 class="join_title"><label for="gender">성별</label></h3>
+	                    <span class="box gender_code">
+	                        <select id="gender" name="UserGender" class="sel">
+	                            <option>성별</option>
+	                            <option value="M">남자</option>
+	                            <option value="F">여자</option>
+	                        </select>                            
+	                    </span>
+	                    <span class="error_next_box">필수 정보입니다.</span>
+	                </div>
+	
+	                <!-- 이메일 -->
+	                <div>
+	                    <h3 class="join_title"><label for="email">본인확인 이메일</label></h3>
+	                    <span class="box int_email">
+	                        <input type="text" id="email" class="int" name="UserEmail" maxlength="100" placeholder="seedb@naver.com">
+	                    </span>
+	                    <span class="error_next_box">이메일 주소를 다시 확인해주세요.</span>    
+	                </div>
+	                
+	                <div class="btn_area">
+	                    <button type="submit" id="btnJoin">
+	                        <span><b>가입하기</b></span>
+	                    </button>
+	                </div>
+                </form>
+            </div> 
+            <!-- content-->
+        </div> 
+        <!-- wrapper -->
+    </body>
+</html>
