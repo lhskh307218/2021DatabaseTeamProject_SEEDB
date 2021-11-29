@@ -60,7 +60,7 @@ CREATE TABLE "ORDER"
     Order_Purpose       VARCHAR(4) CHECK(Order_Purpose IN ('R', 'B')), -- rent : R, buy : B
     OD_OrgName          VARCHAR2(40)    NOT NULL,
     OD_VarietyID        VARCHAR2(30)    NOT NULL,
-    Quantity            NUMBER(5)       NOT NULL,
+    Quantity            NUMBER(8)       NOT NULL,
     FOREIGN KEY(OD_UserID) REFERENCES "USER"(UserID),
     FOREIGN KEY(OD_OrgName) REFERENCES ORGANIZATION(OrgName),
     FOREIGN KEY(OD_VarietyID) REFERENCES SEED(VarietyID)
