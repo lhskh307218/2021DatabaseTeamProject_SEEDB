@@ -2,7 +2,7 @@
     pageEncoding="utf-8"%>
     <!-- import JDBC package -->
 <%@ page language="java" import="java.text.*, java.sql.*" %>
-<%@include file="global.jsp"%>
+<%@include file="../global.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -63,7 +63,7 @@
 		conn.close();
 	%>
 	<% if(Login_Result == true) {%>
-		<script>location.href="../userMain.html";</script>
+		<script>location.href="../../html/user/userMain.html";</script>
 	<% }else { %>
 		<script>
 			alert('로그인에 실패했습니다!'); 

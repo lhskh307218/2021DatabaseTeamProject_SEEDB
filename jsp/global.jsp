@@ -2,7 +2,7 @@
 
 <%
 
-   String global_User_ID = "홍송은";
+   String global_User_ID = "농촌진흥청";
 
    String global_User_PW;
 
