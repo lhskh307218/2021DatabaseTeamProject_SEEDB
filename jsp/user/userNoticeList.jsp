@@ -119,7 +119,7 @@
         <li><a href="userMainAll.jsp">씨앗 구매</a></li>
         <li><a href="userOrderList.jsp">주문 목록</a></li>
         <li><a class="current" href="userNoticeList.jsp">공지 사항</a></li>
-        <li><a href="#">커뮤니티</a></li>
+        <li><a href="userCommunityList.jsp">커뮤니티</a></li>
     </ul>
     <br>
     <input size="5" id="textboxFirst" name="VarietyName" value="글 번호" style="margin-left: 6%;" readonly>| 
