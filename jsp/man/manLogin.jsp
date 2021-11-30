@@ -63,7 +63,7 @@
 		conn.close();
 	%>
 	<% if(Login_Result == true) {%>
-		<script>location.href="../manSeedAllow.html";</script>
+		<script>location.href="../../html/manSeedAllow.html";</script>
 	<% }else { %>
 		<script>
 			alert('로그인에 실패했습니다!'); 
