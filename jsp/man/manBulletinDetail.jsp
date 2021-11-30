@@ -69,7 +69,6 @@
         <form action="manBulletinDelete.jsp" id="frm1" class="submit">
         	<!-- 삭제하려는 게시판의번호를 셋팅  -->
         	<input type="hidden" name="<%=bWNum%>"/>
-          	<button>수정하기</button>
           	<button onclick="javascript:manBulletinDelete();">삭제하기</button>
         </form>
       </div>
