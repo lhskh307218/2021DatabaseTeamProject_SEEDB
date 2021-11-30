@@ -119,10 +119,10 @@
         </form>
     </header>
     <ul class="navi" id="navi">
-        <li><a class="current" href="orgSeedRegister.html">씨앗 등록</a></li>
-        <li><a href="orgOrderList.jsp">주문 목록</a></li>
-        <li><a href="orgBulletinList.jsp">공지 사항</a></li>
-        <li><a href="orgCommunityList.jsp">커뮤니티</a></li>
+        <li><a href="orgSeedRegister.html">씨앗 등록</a></li>
+      <li><a href="orgOrderList.jsp">주문 목록</a></li>
+      <li><a href="orgBulletinList.jsp">공지 사항</a></li>
+      <li style="background-color: #d0db36"><a class="current" href="orgCommunityList.jsp">커뮤니티</a></li>
     </ul>
 	    <div id="rounded-rectangle">씨앗 관리</div>
 	    <div id="background-rectangle">
