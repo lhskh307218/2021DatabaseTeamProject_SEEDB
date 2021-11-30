@@ -25,7 +25,7 @@
 		//조회할 컬럼 설정
         String bWContent = rs.getString("BWContent");
         String bWTime = rs.getString("BWTime");
-        String buser = rs.getString("BUserID");
+        String bUserID = rs.getString("BUserID");
 %>
 
 
@@ -68,7 +68,7 @@
       	<!-- DB에서 조회한 게시글 내용을 셋팅 -->
         <div class="content"><%=bWContent%></div>
         <!-- 해당프로젝트에 맞게 action주소 수정 -->        
-        <%=BWTime%> | <%=BUserID%>        
+        <%=bWTime%> | <%=bUserID%>        
       </div>
       <div class="write" style="border-top: 1px solid black">
         <div class="title">댓글</div>

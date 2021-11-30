@@ -70,11 +70,11 @@
     </ul>
 
     <div class="CommunityDetail">
-      <div class="title"><%=NWTitle%></div>
+      <div class="title"><%=NWtitle%></div>
       <div class="write">
       	<!-- DB에서 조회한 게시글 내용을 셋팅 -->
         <div class="content"><%=NWContent%></div>
-        <%=NWTime%> | <%=NUserID%>
+        <%=NWtime%> | <%=NUserID%>
         </form>
       </div>
       <div class="write" style="border-top: 1px solid black">
