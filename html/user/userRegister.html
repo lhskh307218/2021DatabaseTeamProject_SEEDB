@@ -3,17 +3,17 @@
     <head>
         <meta charset="UTF-8">
         <title>사용자/관리자 회원가입</title>
-        <link rel="stylesheet" href="./css/register.css">
+        <link rel="stylesheet" href="../css/register.css">
         
     </head>
     <body>
         <div style = "float:left">
-            <img src="./image/Logo.png" alt="Logo">
+            <img src="../../image/Logo.png" alt="Logo">
         </div>
         <div id="wrapper">
             <div id="content">
                 <center><h1>사용자 회원가입</h1></center>
-                <form action="jsp/userRegister.jsp" metho=post>
+                <form action="../../jsp/user/userRegister.jsp" metho=post>
 	                <!-- 아이디 -->
 	                <div>
 	                    <h3 class="join_title">
@@ -21,11 +21,6 @@
 	                    </h3>
 	                    <span class="box int_id">
 	                        <input type="text" id="id" class="int" name="UserID" maxlength="20">
-	                        <script>
-					        //var userID = prompt("원하시는 아이디를 입력해주세요");
-					        //document.write("<h1> 당신의 이름은 :" + userID + " 이군요 </h1>")
-					    	</script>
-	                        <img src="./image/Logo.png" id="pswd1_img1" class="pswdImg">
 	                    </span>
 	                    <span class="error_next_box"></span>
 	                </div>
@@ -49,18 +44,7 @@
 	                    </span>
 	                    <span class="error_next_box"></span>
 	                </div>
-	
-	                <!-- 비밀번호 재확인 -->
-	                <div>
-	                    <h3 class="join_title"><label for="check-pw">비밀번호 재확인</label></h3>
-	                    <span class="box int_pass_check">
-	                        <input type="password" id="check-pw" class="int" name="User_checkPW" maxlength="20">
-	                        <span id="alertTxt">비밀번호 불일치</span>
-	                        <img src="../image/Logo.png" id="pswd1_img1" class="pswdImg">
-	                    </span>
-	                    <span class="error_next_box"></span>
-	                </div>
-	
+
 	                <!-- 주소 -->
 	                <div>
 	                    <h3 class="join_title"><label for="address">주소</label></h3>

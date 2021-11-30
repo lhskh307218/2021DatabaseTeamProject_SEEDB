@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lnag="ko">
+    <head>
+        <meta charset="UTF-8">
+        <title>기관 회원가입</title>
+        <link rel="stylesheet" href="../css/register.css">
+        
+    </head>
+    <body>
+        <div style = "float:left">
+            <img src="../../image/Logo.png" alt="Logo">
+        </div>
+        <div id="wrapper">
+            <div id="content">
+                <center><h1>기관 회원가입</h1></center>
+                <form action="../../jsp/org/orgRegister.jsp" metho=post>
+	                <!-- 이름 -->
+	                <div>
+	                    <h3 class="join_title">
+	                        <label for="name">이름</label>
+	                    </h3>
+	                    <span class="box int_id">
+	                        <input type="text" id="name" class="int" name="UserName" maxlength="20">
+	                    </span>
+	                    <span class="error_next_box"></span>
+	                </div>
+	                
+	                <!-- 목적 -->
+	                <div>
+	                    <h3 class="join_title"><label for="gender">목적</label></h3>
+	                    <span class="box gender_code">
+	                        <select id="gender" name="UserPurpose" class="sel">
+	                            <option>목적</option>
+	                            <option value="L">대여</option>
+	                            <option value="S">판매</option>
+	                        </select>                            
+	                    </span>
+	                    <span class="error_next_box">필수 정보입니다.</span>
+	                </div>
+	                
+	              	<!-- 지역 -->
+	                <div>
+	                    <h3 class="join_title"><label for="age">지역</label></h3>
+	                    <span class="box int_name">
+	                        <input type="text" id="age" class="int" name="UserArea" maxlength="20">
+	                    </span>
+	                    <span class="error_next_box"></span>
+	                </div>
+	                
+	                <!-- 제휴시작 날짜 -->
+	                <div>
+	                    <h3 class="join_title"><label for="phoneN">제휴시작 날짜</label></h3>
+	                    <span class="box int_mobile">
+	                        <input type="text" id="phoneN" class="int" name="UserAffiliateDate" maxlength="16" placeholder="yyyy-mm-dd 형식으로 입력해주세요. ex) 2021-03-01>:">
+	                    </span>
+	                    <span class="error_next_box"></span>    
+	                </div>
+	                
+	                <!-- 제휴기간 -->
+	                <div>
+	                    <h3 class="join_title"><label for="email">제휴기간</label></h3>
+	                    <span class="box int_email">
+	                        <input type="text" id="email" class="int" name="UserP" maxlength="100" placeholder="ex) 365">
+	                    </span>
+	                    <span class="error_next_box">이메일 주소를 다시 확인해주세요.</span>    
+	                </div>
+	
+	                <!-- 비밀번호 -->
+	                <div>
+	                    <h3 class="join_title"><label for="pw">비밀번호</label></h3>
+	                    <span class="box int_pass">
+	                        <input type="password" id="pw" class="int" name="UserPW" maxlength="20">
+	                    </span>
+	                    <span class="error_next_box"></span>
+	                </div>
+	                
+	                <div class="btn_area">
+	                    <button type="submit" id="btnJoin">
+	                        <span><b>가입하기</b></span>
+	                    </button>
+	                </div>
+                </form>
+            </div> 
+            <!-- content-->
+        </div> 
+        <!-- wrapper -->
+    </body>
+</html>

@@ -29,18 +29,15 @@
 		int result = 0;
 	
 		try{
-			String iUser_Id = request.getParameter("UserID");
-			String iUser_Name = request.getParameter("UserName");
-			String iUser_Pw = request.getParameter("UserPW");
-			String iUser_Addr = request.getParameter("UserAddr");
-			String iUser_Age = request.getParameter("UserAge");
-			String iUser_PhoneN = request.getParameter("UserPhoneN");
-			String iUser_Gender = request.getParameter("UserGender");
-			String iUser_Email = request.getParameter("UserEmail");
+			String UserName = request.getParameter("UserName");
+			String UserPurpose = request.getParameter("UserPurpose");
+			String UserArea = request.getParameter("UserArea");
+			String UserAffiliateDate = request.getParameter("UserAffiliateDate");
+			String UserP = request.getParameter("UserP");
+			String UserPW = request.getParameter("UserPW");
 			
-			String sql = "INSERT INTO \"USER\" VALUES (" + "'" + iUser_Id + "', " + "'" + iUser_Name + "', " + "'"
-					+ iUser_Pw + "', " + "'" + iUser_Addr + "', " + iUser_Age + ", " + iUser_PhoneN + ", " + "'"
-					+ iUser_Gender + "', " + "'" + iUser_Email + "')";
+			String sql = "INSERT INTO ORGANIZATION VALUES (" + "'" + UserName + "', " + "'" + UserPurpose + "', " + "'"
+					+ UserArea + "', '" + UserAffiliateDate + "', " + UserP + ", '" + UserPW + "')";
 			
 			stmt = conn.createStatement();
 			result = stmt.executeUpdate(sql);
@@ -63,7 +60,7 @@
 	<% if(register_Result == true) {%>
 		<script>
 			alert('회원가입에 성공했습니다!'); 
-			location.href="../../html/user/userLogin.html";
+			location.href="../../html/org/orgLogin.html";
 		</script>
 	<% }else { %>
 		<script>

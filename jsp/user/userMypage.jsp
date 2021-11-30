@@ -115,9 +115,6 @@
 <body>
     <header>
         <img class = "Logo" src="../../image/Logo.png" alt="Logo" width=100px>
-        <img class = "Info" src="../../image/user.png" alt="user" width=3%>
-        <a class = "mypage" href="./mainRegister.html">마이페이지</a>
-        <a class = "mypage" href="./Register.html">로그아웃</a>  
     </header>
     <ul class="navi" id="navi">
         <li><a id="navi" href="userMainAll.jsp">씨앗 구매</a></li>
@@ -127,12 +124,6 @@
     </ul>
     <div id="name-index">이름</div>
     <div id="name-backround"><input class = "textbox" type="text"></div>
-		
-		<!--
-        <div class="wrap">
-            <button class="rd-rectangle_btn">주문하기</button>
-            <button class="rd-rectangle_btn" onclick="history.back()">재주문하기</button>
-        </div>-->
     </div>
     <div><br></br></div>
 </body>
