@@ -164,8 +164,7 @@
                 <h3>seedb님</h3>
             </div>
             <div>
-                <a href="./mainRegister.html" target="_blank">마이페이지</a>
-                <a href="./Register.html">로그아웃</a>  
+                <a href="../../html/selectUserType.html">로그아웃</a>  
             </div>
         </form>
     </header>
