@@ -177,11 +177,28 @@
             color: white;
             font-weight: bold;
             font-size: 20px;
-        } 
+        }
+	.Info {
+            margin-top: 3%;
+            margin-right: 1%;
+            float: right;
+        }
     </style>
 </head>
 <body>
-<h1>네비게이션바</h1>
+<header>
+        <img class = "Logo" src="../../image/Logo.png" alt="Logo">
+        <form class = "Info">
+            <div style="display: inline-flex";>
+                <img class = "user" src="../../image/user.png" alt="user">
+                <h3>seedb님</h3>
+            </div>
+            <div>
+                <a href="./mainRegister.html" target="_blank">마이페이지</a>
+                <a href="./Register.html">로그아웃</a>  
+            </div>
+        </form>
+    </header>
     <ul class="navi" id="navi">
         <li><a href="userMainAll.jsp">씨앗 구매</a></li>
         <li><a class="current" href="userOrderList.jsp">주문 목록</a></li>
