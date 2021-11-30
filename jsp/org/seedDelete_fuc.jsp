@@ -3,7 +3,6 @@
     <!-- import JDBC package -->
 <%@ page language="java" import="java.text.*, java.sql.*" %>
 <%@include file="../global.jsp"%>
-<%@page import="java.net.URLDecoder"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,13 +25,14 @@
 	Statement stmt = null;
 	Class.forName("oracle.jdbc.driver.OracleDriver");
 	conn = DriverManager.getConnection(url, user, pass);	
-	
+	%>
+	<%
 	String VarietyID, Quantity, Org, sql, query;
 	int res;
 	
 	Org =  request.getParameter("Org");
-	VarietyID = request.getParameter("VarietyID");;
-	Quantity = request.getParameter("Quantity");;
+	VarietyID = request.getParameter("VarietyID");
+	Quantity = request.getParameter("Quantity");
 	
 	stmt = conn.createStatement();
 	conn.setAutoCommit(false);
@@ -40,8 +40,9 @@
 	{
 		Org_Result = true;
 		try {
-			sql = "SELECT H.VARIETYID " + "FROM HAS H " 
-					+ "WHERE H.ORGNAME = '" + Org + "'";
+			sql = "SELECT H.VARIETYID FROM HAS H WHERE H.ORGNAME = '" 
+					+ Org + "'";
+			
 			ResultSet rs = stmt.executeQuery(sql);
 			
 			while(rs.next())
@@ -53,32 +54,31 @@
 					break;
 				}
 			}
+			
 			if(Register_Result == true)
 			{
-					Register_Result = true;
-					try {
-						query = "UPDATE HAS SET QUANTITY = "
-	      						+ Quantity
-	      						+ " WHERE VARIETYID = '"
-	                 			+ VarietyID + "' "
-	                 			+ "AND ORGNAME = '"
-	                 			+ Org + "'";
-						res = stmt.executeUpdate(query);
-						if (res == 1) {
-							Register_Result = true;
-							conn.commit();
-						} else {
-							Register_Result = false;
-						}
-					} catch (SQLException ex2) {
-						System.err.println("sql error = " + ex2.getMessage());
-						System.exit(1);
+				Register_Result = true;
+				try {
+					query = "DELETE FROM HAS WHERE VARIETYID = '"
+                 			+ VarietyID + "'"
+                 			+ " AND ORGNAME = '"
+                 			+ Org + "'";
+					res = stmt.executeUpdate(query);
+					if (res == 1) {
+						Register_Result = true;
+						conn.commit();
+					} else {
+						Register_Result = false;
 					}
+				} catch (SQLException ex2) {
+					System.err.println("sql error = " + ex2.getMessage());
+					System.exit(1);
+				}
 			}
 		} catch (SQLException ex1) {
-			System.err.println("sql error = " + ex1.getMessage());
-			System.exit(1);
-		}
+ 			System.err.println("sql error = " + ex1.getMessage());
+ 			System.exit(1);
+ 		}
 	}
 	%>
 	<% if(Org_Result == false) {%>
@@ -88,7 +88,7 @@
 		</script>
 	<% }else { %>
 		<script>
-			alert('씨앗 수량이 수정되었습니다!'); 
+			alert('씨앗이 삭제되었습니다!');
 			location.href="orgSeedManage.jsp";
 		</script>
 	<% } %>

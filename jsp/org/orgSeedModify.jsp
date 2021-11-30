@@ -135,10 +135,9 @@
 		        <input type="text" name="VarietyID" class="textbox"><br></br>
 		        등록 수량
 		        <input type="text" name="Quantity" class="textbox"><br></br>
-		        대여 및 구매 여부
-				
+
 		        <div class="wrap">
-		            <button class="rd-rectangle_btn" onclick="seedRegister_fuc.jsp;">등록하기</button>
+		            <button class="rd-rectangle_btn" onclick="seedRegister_fuc.jsp;">수정하기</button>
 		        </div>
 		    </div>
 	    <div><br></br></div>

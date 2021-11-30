@@ -124,15 +124,11 @@
         <li><a href="#">공지 사항</a></li>
         <li><a href="#">커뮤니티</a></li>
     </ul>
-    <%
-    	request.setCharacterEncoding("UTF-8");
-    	String Org = request.getParameter("Org");
-    %>
 	    <div id="rounded-rectangle">씨앗 관리</div>
 	    <div id="background-rectangle">
 	        <div class="wrap">
 	        	<form action="orgSeedRegister.jsp" metho=post>
-	            	<button class="rd-rectangle_btn" type = "submit" <%= Org %>>씨앗 등록</button><br></br>
+	            	<button class="rd-rectangle_btn" type = "submit">씨앗 등록</button><br></br>
 	            </form>
 	            <form action="orgSeedModify.jsp" metho=post>
 	            	<button class="rd-rectangle_btn">씨앗 수량 수정</button><br></br>

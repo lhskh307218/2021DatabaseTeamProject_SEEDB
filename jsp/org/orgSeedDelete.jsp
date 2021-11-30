@@ -1,10 +1,13 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
+    <!-- import JDBC package -->
+<%@ page language="java" import="java.text.*, java.sql.*" %>
+<%@include file="../global.jsp"%>
 <!DOCTYPE html>
-<html lang="ko">
-
 <head>
     <meta charset="UTF-8">
-    <title>OrganizationEditSeedInfo</title>
-    <link rel="stylesheet" href="/css/usernavi.css?ver=1" type="text/css" >
+    <title>OrganizationSelectSeed</title>
+    <link rel="stylesheet" href="../../html/css/usernavi.css?ver=1" type="text/css" >
     <style>
         html, body {
             margin: 0;
@@ -85,12 +88,14 @@
             font-weight: bold;
         }
         .rd-rectangle_btn {
-            width: 140px;
+            width: 150px;
             height: 50px;
             margin-left: 35%;
+            
             background-color: #D0DB36;
             border-radius: 30px;
             border:0 solid black;
+
             text-align: center;
             color: white;
             font-weight: bold;
@@ -101,10 +106,10 @@
 
 <body>
     <header>
-        <img class = "Logo" src="../image/Logo.png" alt="Logo">
+        <img class = "Logo" src="../../image/Logo.png" alt="Logo">
         <form class = "Info">
             <div style="display: inline-flex";>
-                <img class = "user" src="../image/user.png" alt="user">
+                <img class = "user" src="../../image/user.png" alt="user">
                 <h3>seedb님</h3>
             </div>
             <div>
@@ -119,23 +124,20 @@
         <li><a href="#">공지 사항</a></li>
         <li><a href="#">커뮤니티</a></li>
     </ul>
-    <div id="rounded-rectangle">씨앗 수정</div>
-    <div id="background-rectangle">
-        씨앗 이름
-        <input type="text" name="SeedName" class="textbox"><br></br>
-        품종 이름
-        <input type="text" name="VarietyName" class="textbox"><br></br>
-        품종 번호
-        <input type="text" name="OrgName" class="textbox"><br></br>
-        등록 수량
-        <input type="text" name="Purchase_date" class="textbox"><br></br>
-        대여 및 구매 여부
-        <input type="checkbox" name="box" value="R" style="margin-left: 25%;">대여</input>
-        <input type="checkbox" name="box" value="S">구매</input><br></br>
-
-        <div class="wrap">
-            <button class="rd-rectangle_btn">수정하기</button>
-        </div>
-    </div>
-    <div><br></br></div>
+    <form action="seedDelete_fuc.jsp" metho=post>
+	    <div id="rounded-rectangle">씨앗 수량 수정</div>
+		    <div id="background-rectangle">
+		    	<h4>본인 확인을 위해 기관 이름을 다시 입력합니다.</h4>
+		    	기관 이름
+		    	<input type="text" name="Org" class="textbox"><br></br>
+		    	<h4>삭제하고 싶은 씨앗의 품종번호를 입력하세요</h4>
+		    	품종 번호
+		        <input type="text" name="VarietyID" class="textbox"><br></br>
+				
+		        <div class="wrap">
+		            <button class="rd-rectangle_btn" onclick="seedRegister_fuc.jsp;">삭제하기</button>
+		        </div>
+		    </div>
+	    <div><br></br></div>
+	</form>
 </body>

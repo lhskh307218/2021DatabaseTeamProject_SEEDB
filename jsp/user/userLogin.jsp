@@ -63,7 +63,7 @@
 		conn.close();
 	%>
 	<% if(Login_Result == true) {%>
-		<script>location.href="../../html/user/userMain.html";</script>
+		<script>location.href="userMainAll.jsp";</script>
 	<% }else { %>
 		<script>
 			alert('로그인에 실패했습니다!'); 

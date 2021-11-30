@@ -143,11 +143,11 @@
     <div class="weekbestSeedBack">
         이번 주 판매 베스트 TOP5<br><br>
         <%
-        String serverIP = "localhost";
+        String serverIP = "192.168.56.1";
         String strSID = "orcl";
         String portNum = "1521";
-        String user = "teamproject";
-        String pass = "comp322";
+        String user = "seed";
+        String pass = "seed";
         String url = "jdbc:oracle:thin:@" + serverIP + ":" + portNum + ":" + strSID;
         request.setCharacterEncoding("UTF-8");
 
