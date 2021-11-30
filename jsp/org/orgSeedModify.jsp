@@ -113,7 +113,7 @@
                 <h3>seedb님</h3>
             </div>
             <div>
-                <a href="./mainRegister.html">마이페이지</a>
+                <a href="./mainRegister.html" target="_blank">마이페이지</a>
                 <a href="./Register.html">로그아웃</a>  
             </div>
         </form>
@@ -123,21 +123,24 @@
         <li><a href="#">주문 목록</a></li>
         <li><a href="#">공지 사항</a></li>
         <li><a href="#">커뮤니티</a></li>
-    </ul>S
-    <form action="seedRegister_fuc.jsp" metho=post>
-	    <div id="rounded-rectangle">씨앗 등록</div>
-	    <div id="background-rectangle">
-	    	<h4>본인 확인을 위해 기관 이름을 다시 입력합니다.</h1>
-	    	기관 이름
-	    	<input type="text" name="Org" class="textbox"><br></br>
-	 	    품종 번호
-	        <input type="text" name="VarietyID" class="textbox"><br></br>
-	        등록 수량
-	        <input type="text" name="Quantity" class="textbox"><br></br>
-	        <div class="wrap">
-	            <button class="rd-rectangle_btn">등록하기</button>
-	        </div>
-	    </div>
+    </ul>
+    <form action="seedModify_fuc.jsp" metho=post>
+	    <div id="rounded-rectangle">씨앗 수량 수정</div>
+		    <div id="background-rectangle">
+		    	<h4>본인 확인을 위해 기관 이름을 다시 입력합니다.</h4>
+		    	기관 이름
+		    	<input type="text" name="Org" class="textbox"><br></br>
+		    	<h4>수정하고 싶은 씨앗의 품종번호를 입력하세요</h4>
+		    	품종 번호
+		        <input type="text" name="VarietyID" class="textbox"><br></br>
+		        등록 수량
+		        <input type="text" name="Quantity" class="textbox"><br></br>
+		        대여 및 구매 여부
+				
+		        <div class="wrap">
+		            <button class="rd-rectangle_btn" onclick="seedRegister_fuc.jsp;">등록하기</button>
+		        </div>
+		    </div>
 	    <div><br></br></div>
 	</form>
 </body>

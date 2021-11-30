@@ -65,7 +65,7 @@
 		conn.close();
 	%>
 	<% if(Login_Result == true) {%>
-		<script>location.href="../orgSeedList.html";</script>
+		<script>location.href="./orgSeedManage.jsp";</script>
 	<% }else { %>
 		<script>
 			alert('로그인에 실패했습니다!'); 

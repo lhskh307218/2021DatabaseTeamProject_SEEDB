@@ -3,6 +3,7 @@
     <!-- import JDBC package -->
 <%@ page language="java" import="java.text.*, java.sql.*" %>
 <%@include file="../global.jsp"%>
+<%@page import="java.net.URLDecoder"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,18 +27,14 @@
 	ResultSet rs = null;
 	Class.forName("oracle.jdbc.driver.OracleDriver");
 	conn = DriverManager.getConnection(url, user, pass);	
-	%>
-	<%
+	
 	String VarietyID, Quantity, Org, sql, query;
 	int res;
 	
-	//request.setCharacterEncoding("utf-8");
-	
 	Org =  request.getParameter("Org");
-	VarietyID = request.getParameter("VarietyID");
-	Quantity = request.getParameter("Quantity");
+	VarietyID = request.getParameter("VarietyID");;
+	Quantity = request.getParameter("Quantity");;
 	
-	/*이부분에서 globalUserID가 인식되지 못해서 "농촌진흥청"으로 입력하고 진행해도 아래의 sql Org부분에서 걸리는 것 같아요ㅠ*/
 	if(Org.equals(global_User_ID))
 	{
 		try {
@@ -49,16 +46,16 @@
 			{
 				String tmpVID = rs.getString(1);
 				
-				if(VarietyID.equals(tmpVID)) {
+				if(VarietyID.equals(tmpVID) == false) {
 					Register_Result = false;
 				}
 				else {
 					Register_Result = true;
 					try {
-						query = "INSERT INTO HAS VALUES ("
-								+ "'" + VarietyID + "', "
-								+ "'" + Org + "', " 
-								+  Quantity + ", 0)";
+						query = "UPDATE HAS SET QUANTITY = "
+	      						+ Quantity
+	      						+ " WHERE VARIETYID = '"
+	                 			+ VarietyID + "'";
 						res = stmt.executeUpdate(query);
 						if (res == 1) {
 							Register_Result = true;
@@ -90,12 +87,12 @@
 	<% }else { %>
 		<% if(Register_Result == true) {%>
 		<script>
-			alert('씨앗 등록에 성공했습니다!');
+			alert('씨앗 수정에 성공했습니다!');
 			location.href="../../html/org/orgSeedList.html";
 		</script>
 		<% }else { %>
 		<script>
-			alert('이미 존재하는 품종입니다!'); 
+			alert('씨앗 수정에 실패했습니다!'); 
 			window.history.back();
 		</script>
 		<% } %>
