@@ -90,4 +90,47 @@ WHERE OrgName = '몬산토코리아 유한회사';
 UPDATE "HAS" SET Quantity = 70000000
 WHERE OrgName = '소이벤처(주)';
 
+ALTER TABLE "HAS" ADD(RPermit NUMBER(2));
+
+UPDATE "HAS" SET RPermit = 1
+WHERE OrgName = '농촌진흥청';
+UPDATE "HAS" SET RPermit = 1
+WHERE OrgName = '주식회사씨드피아';
+UPDATE "HAS" SET RPermit = 1
+WHERE OrgName = '씨제이제일제당';
+UPDATE "HAS" SET RPermit = 1
+WHERE OrgName = '남평농업협동조합장';
+UPDATE "HAS" SET RPermit = 1
+WHERE OrgName = '현대종묘';
+UPDATE "HAS" SET RPermit = 1
+WHERE OrgName = '그린씨드';
+UPDATE "HAS" SET RPermit = 1
+WHERE OrgName = '산림품종관리센터';
+UPDATE "HAS" SET RPermit = 1
+WHERE OrgName = '(주)제농 에스앤티 농업회사법인';
+UPDATE "HAS" SET RPermit = 1
+WHERE OrgName = '(주)포테이토밸리';
+UPDATE "HAS" SET RPermit = 1
+WHERE OrgName = '농업회사법인 오스템바이오㈜';
+UPDATE "HAS" SET RPermit = 1
+WHERE OrgName = '수산식물관리센터';
+UPDATE "HAS" SET RPermit = 1
+WHERE OrgName = '(주)농심';
+UPDATE "HAS" SET RPermit = 1
+WHERE OrgName = '왕산종묘';
+UPDATE "HAS" SET RPermit = 1
+WHERE OrgName = '몬산토코리아 유한회사';
+UPDATE "HAS" SET RPermit = 1
+WHERE OrgName = '소이벤처(주)';
+
+-- has 승인 요청된 seed 추가
+insert into HAS VALUES ('생판-2007-929', '농촌진흥청', 123456, 0);
+insert into HAS VALUES ('생판-2007-929', '(주)농심', 456879, 0);
+insert into HAS VALUES ('생판-2018-1633', '농촌진흥청', 9876859, 0);
+insert into HAS VALUES ('출원-2017-324', '농촌진흥청', 650000, 0);
+insert into HAS VALUES ('생판-2007-866', '그린씨드', 170000, 0);
+insert into HAS VALUES ('출원-2009-313', '(주)포테이토밸리', 230000, 0);
+insert into HAS VALUES ('생판-2015-188', '소이벤처(주)', 230000, 0);
+insert into HAS VALUES ('생판-2015-188', '남평농업협동조합장', 230000, 0);
+
 COMMIT;
