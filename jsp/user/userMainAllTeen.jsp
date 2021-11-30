@@ -124,6 +124,11 @@
             text-align: left;
             padding-left: 10px;
         }
+	.Info {
+            margin-top: 3%;
+            margin-right: 1%;
+            float: right;
+        }
     </style>
 </head>
 <body>
