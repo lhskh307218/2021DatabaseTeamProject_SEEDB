@@ -60,7 +60,7 @@
       <li><a href="manSeedAllow.html">기관 씨앗 승인</a></li>
       <li><a href="manOrderList.jsp">주문 목록</a></li>
       <li><a href="manBulletinList.jsp">공지 사항</a></li>
-      <li style="background-color: #d0db36"><a href="manCommunityList.jsp">커뮤니티</a></li>
+      <li style="background-color: #d0db36"><a class="current" href="manCommunityList.jsp">커뮤니티</a></li>
     </ul>
 
     <div class="CommunityDetail">
