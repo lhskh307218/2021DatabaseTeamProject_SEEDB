@@ -132,7 +132,7 @@
     </style>
 </head>
 <body>
-  <header>
+<header>
         <img class = "Logo" src="../../image/Logo.png" alt="Logo">
         <form class = "Info">
             <div style="display: inline-flex";>
