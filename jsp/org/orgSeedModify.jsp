@@ -119,10 +119,10 @@
         </form>
     </header>
     <ul class="navi" id="navi">
-        <li><a href="#">씨앗 등록</a></li>
-        <li><a href="#">주문 목록</a></li>
-        <li><a href="#">공지 사항</a></li>
-        <li><a href="#">커뮤니티</a></li>
+        <li><a class="current" href="orgSeedRegister.html">씨앗 등록</a></li>
+        <li><a href="orgOrderList.jsp">주문 목록</a></li>
+        <li><a href="orgBulletinList.jsp">공지 사항</a></li>
+        <li><a href="orgCommunityList.jsp">커뮤니티</a></li>
     </ul>
     <form action="seedModify_fuc.jsp" metho=post>
 	    <div id="rounded-rectangle">씨앗 수량 수정</div>
