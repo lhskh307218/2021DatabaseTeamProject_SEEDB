@@ -185,8 +185,8 @@
     <ul class="navi" id="navi">
         <li><a href="orgSeedRegister.jsp">씨앗 등록</a></li>
         <li><a class="current" href="orgOrderList.jsp">주문 목록</a></li>
-        <li><a href="#">공지 사항</a></li>
-        <li><a href="#">커뮤니티</a></li>
+        <li><a href="orgBulletinList.jsp">공지 사항</a></li>
+        <li><a href="orgCommunityList.jsp">커뮤니티</a></li>
     </ul>
 <%
    String serverIP = "192.168.56.1";

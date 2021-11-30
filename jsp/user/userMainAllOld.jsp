@@ -131,8 +131,8 @@
     <ul class="navi" id="navi">
         <li><a class="current" id="navi" href="userMainAll.jsp">씨앗 구매</a></li>
         <li><a href="userOrderList.jsp">주문 목록</a></li>
-        <li><a href="#">공지 사항</a></li>
-        <li><a href="#">커뮤니티</a></li>
+        <li><a href="userNoticeList.jsp">공지 사항</a></li>
+        <li><a href="userCommunityList.jsp">커뮤니티</a></li>
     </ul>
     <ul class="purposemenu" id="purposemenu">
         <li><a class="current" href="userMainAll.jsp">전체</a></li>

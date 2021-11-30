@@ -9,41 +9,41 @@
 <%@page import="study.DBConnection"%> 
 <!DOCTYPE html>
 <html>
- 	<link rel="stylesheet" href="../../html/css/usernavi.css" />
+    <link rel="stylesheet" href="../../html/css/usernavi.css" />
 
-  	<head>
-    	<meta charset="UTF-8" />
-    	<title>커뮤니티 목록</title>
-    	<link rel="stylesheet" href="../css/usernavi.css?ver=1" type="text/css" />
-    	<link rel="stylesheet" href="../css/header.css" />
+     <head>
+       <meta charset="UTF-8" />
+       <title>커뮤니티 목록</title>
+       <link rel="stylesheet" href="../css/usernavi.css?ver=1" type="text/css" />
+       <link rel="stylesheet" href="../css/header.css" />
         <link rel="stylesheet" href="./css/BulletinList.css" />
-    	<link rel="stylesheet" href="../css/communityList.css" />
+       <link rel="stylesheet" href="../css/communityList.css" />
         <style></style>
     
- 	</head>
-	<meta charset="UTF-8">
-	<title>커뮤니티 목록</title>
-  	<body>
-	    <header>
-	     	<img class="Logo" src="../image/Logo.png" alt="Logo" />
-	      	<form class="Info">
-	        	<div style="display: inline-flex" ;>
-	          		<img class="user" src="../image/user.png" alt="user" />
-	          		<h3>seedb님</h3>
-	        	</div>
-	        	<div>
-	          		<a href="./mainRegister.html" target="_blank">마이페이지</a>
-	          		<a href="./Register.html">로그아웃</a>
-	        	</div>
-			</form>
-		</header>
-		<ul class="navi" id="navi">
-	   		<li><a href="#">씨앗 등록</a></li>
-	      	<li><a href="#">사용자/기관 관리</a></li>
-	      	<li><a href="#">공지 사항</a></li>
-	      	<li style="background-color: #d0db36"><a href="#">커뮤니티</a></li>
-	 	</ul>
-	   <div class="kategorie">
+    </head>
+   <meta charset="UTF-8">
+   <title>커뮤니티 목록</title>
+     <body>
+       <header>
+           <img class="Logo" src="../image/Logo.png" alt="Logo" />
+            <form class="Info">
+              <div style="display: inline-flex" ;>
+                   <img class="user" src="../image/user.png" alt="user" />
+                   <h3>seedb님</h3>
+              </div>
+              <div>
+                   <a href="./mainRegister.html" target="_blank">마이페이지</a>
+                   <a href="./Register.html">로그아웃</a>
+              </div>
+         </form>
+      </header>
+      <ul class="navi" id="navi">
+            <li><a href="manSeedAllow.html">기관 씨앗 승인</a></li>
+            <li><a href="manOrderList.jsp">주문 목록</a></li>
+            <li><a href="manBulletinList.jsp">공지 사항</a></li>
+            <li style="background-color: #d0db36"><a class="current" href="manCommunityList.jsp">커뮤니티</a></li>
+       </ul>
+      <div class="kategorie">
          <input type="radio" name="kategorie" id="zero" />
          <label for="zero">전체</label>
          <input type="radio" name="kategorie" id="one" />
@@ -54,29 +54,13 @@
           <label for="three">소통</label>
     </div>
     <div class="communityList">
-        <div class="community">
-          <div class="title">글 제목</div>
-          <div class="content">
-          <div class="preview">작성한 글 내용 20줄정도 이내로 미리보기</div>
-          <div class="inf">
-            <div>글 작성 시각|</div>
-            <div>글 작성자</div>
-          </div>
-          </div>
-            </div>
-            </div>
-     
-      
-    
     <%
         Connection con=null;
         PreparedStatement pstmt=null;
         ResultSet rs = null;
         try{
             con = DBConnection.getCon();
-            String sql="SELECT N.NWTitle, N.NWContent, N.NWtime, R.UserID
-                        FROM NOTICE_BOARD N, \"READ\" R
-                        WHERE N.NWNum = R.NWNum;";
+            String sql="SELECT N.NWTitle, N.NWContent, N.NWtime, R.UserID FROM NOTICE_BOARD N, \"READ\" R WHERE N.NWNum = R.NWNum";
             pstmt = con.prepareStatement(sql);
             rs = pstmt.executeQuery();
             //디비의 Row 만큼 while반족
@@ -86,13 +70,20 @@
                 String id = rs.getString("UserID");
                 String co = rs.getString("NWContent");
                 String dt = rs.getString("NWTime");   
-	%>
+   %>
 
-	   	<div class="Community">
-			
-	   		<a href="manCommunityDetail.jsp?NWNum=<%=no%>" ><%=title1 %> | <%=co %> | <%=dt %> | <%=id %></a>
-	   	</div>
-	<%
+         <div class="Community">
+            <div class="title"><a href="manCommunityDetail.jsp?NWNum=<%=no%>" ><%=title1 %></a></div>
+             <div class="content">
+                <div class="preview"><a href="manCommunityDetail.jsp?NWNum=<%=no%>" ><%=co %></a></div>
+                <div class="inf">
+                  <div><%=dt %> </div>
+                  <div><%=id %></div>
+                </div>
+             </div>
+         </div>
+     
+   <%
             }
         }catch(SQLException se){
             System.out.println(se.getMessage());
@@ -106,8 +97,7 @@
             }
         }
     %>
-		
-
-	</div>
-	</body>
+   
+   </div>
+   </body>
 </html>

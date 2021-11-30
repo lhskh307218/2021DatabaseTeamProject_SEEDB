@@ -166,10 +166,10 @@
 <body>
 <h1>네비게이션바</h1>
     <ul class="navi" id="navi">
-        <li><a href="#">씨앗 등록</a></li>
+        <li><a href="manSeedAllow.html">기관 씨앗 승인</a></li>
         <li><a class="current" href="manOrderList.jsp">주문 목록</a></li>
-        <li><a href="#">공지 사항</a></li>
-        <li><a href="#">커뮤니티</a></li>
+        <li><a href="manBulletinList.jsp">공지 사항</a></li>
+        <li><a href="manCommunityList.jsp">커뮤니티</a></li>
     </ul>
 <%
    String serverIP = "localhost";

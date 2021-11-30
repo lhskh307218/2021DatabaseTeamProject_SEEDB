@@ -25,7 +25,7 @@
 		//조회할 컬럼 설정
         String bWContent = rs.getString("BWContent");
         String bWTime = rs.getString("BWTime");
-        String buser = rs.getString("BUserID");
+        String bUserID = rs.getString("BUserID");
 %>
 
 
@@ -56,10 +56,10 @@
       </form>
     </header>
     <ul class="navi" id="navi">
-      <li><a href="#">씨앗 등록</a></li>
-      <li><a href="#">주문 목록</a></li>
-      <li style="background-color: #d0db36"><a href="#">공지 사항</a></li>
-      <li><a href="#">커뮤니티</a></li>
+      <li><a href="orgSeedRegister.html">씨앗 등록</a></li>
+      <li><a href="orgOrderList.jsp">주문 목록</a></li>
+      <li style="background-color: #d0db36"><a class="current" href="orgBulletinList.jsp">공지 사항</a></li>
+      <li><a href="orgCommunityList.jsp">커뮤니티</a></li>
     </ul>
 
     <div class="BulletinDetail">
@@ -68,7 +68,7 @@
       	<!-- DB에서 조회한 게시글 내용을 셋팅 -->
         <div class="content"><%=bWContent%></div>
         <!-- 해당프로젝트에 맞게 action주소 수정 -->        
-        <%=BWTime%> | <%=BUserID%>        
+        <%=bWTime%> | <%=bUserID%>        
       </div>
       <div class="write" style="border-top: 1px solid black">
         <div class="title">댓글</div>

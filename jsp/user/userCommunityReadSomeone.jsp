@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>userNoticeBoard</title>
+<title>Reading the content</title>
 <style>
 		input:focus {outline:none;}
 		.footer {
@@ -74,7 +74,7 @@
 			height: 650px;
 			
 			margin-left: 4%;
-
+			
 			background-color: #FFF3EF;
 		}
 		.content {
@@ -85,22 +85,38 @@
 			height: 70%;
 			background-color: white;
 			
-			margin: 4%;
+			margin-top: 4%;
+			margin-left: 4%;
+			margin-right: 4%;
 			padding: 2%;
 			
 			color: black;
-			text-weight: bold;
-			text-size: 30px;
+			font-size: 30px;
+			font-weight: bold;
 		}
-		.comment {
-			display: inline-block;
-			width: 100%;
-			height: 10%;
+		.texts {
 			overflow: scroll;
+			float: right;
 			
-			<!-- background: transparent; -->
-			background-color: black;
+			margin-top: 0.5%;
+			margin-right: 5%;
 			
+			background: transparent;
+			
+			font-weight: bold;
+			font-size: 30px;
+						
+		}
+		.writer {
+			float: right;
+			
+			margin-top: 0.5%;
+			margin-right: 5%;
+			
+			background: transparent;
+			
+			font-weight: bold;
+			font-size: 30px;
 		}
     </style>
 </head>
@@ -109,8 +125,8 @@
     <ul class="navi" id="navi">
         <li><a href="userMainAll.jsp">씨앗 구매</a></li>
         <li><a href="userOrderList.jsp">주문 목록</a></li>
-        <li><a class="current" href="userNoticeList.jsp">공지 사항</a></li>
-        <li><a href="userCommunityList.jsp">커뮤니티</a></li>
+        <li><a href="userNoticeList.jsp">공지 사항</a></li>
+        <li><a class="current" href="userCommunityList.jsp">커뮤니티</a></li>
     </ul>
     
     <%
@@ -131,36 +147,24 @@
     conn.setAutoCommit(false);
     stmt = conn.createStatement();
     
-    String Num = request.getParameter("Num");
     String Title = request.getParameter("Title");
-    
-    try {
-    	String sql = "SELECT NWContent\r\n"
-    			+ "FROM NOTICE_BOARD\r\n"
-    			+ "WHERE NWNum = " + Num;
-    	
-    	rs = stmt.executeQuery(sql);
-        while (rs.next()) {
-        	String Content = rs.getString(1);
+    String Content = request.getParameter("Content");
+    String UserID = request.getParameter("UserID");
+    String Time = request.getParameter("Time");
+
    	%>
-    		<div class="title"><%=Title %></div>
-    		<div class="contentBack">
-    			<div class="content">
-    				<%=Content %>
-    			</div>
+    <div class="title"><%=Title %></div>
+    	<div class="contentBack">
+    		<div class="content">
+    			<%=Content %>
     		</div>
-    	<%
-        }
-    }catch(SQLException ex2) {
-    	System.err.println("sql error = " + ex2.getMessage());
-       	System.exit(1);
-    }
-    
-    %>
-    
-    
-    
+    		<div class="writer">
+    			<%=Time %> | <%=UserID %>
+    		</div>
+    		
+    	</div>
     <%
+
     stmt.close();
     conn.close();
     %>
