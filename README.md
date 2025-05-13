@@ -16,5 +16,9 @@
 - 🔐 **회원 가입 및 로그인 기능**
 
 
-## 🔗ERD 및 관계형 데이터베이스 스키마
+## 🔗 ERD 및 관계형 데이터베이스 스키마
 ![image](https://github.com/user-attachments/assets/f667c445-25af-4b21-92e3-765457679b1a)
+
+
+## 🖼️ Figma 이미지
+![image](https://github.com/user-attachments/assets/bc9b5a4a-870b-4586-a882-7f43d532c021)
